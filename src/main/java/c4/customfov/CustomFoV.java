@@ -20,7 +20,7 @@ public class CustomFoV {
 
     public static final String MODID = "customfov";
     public static final String NAME = "Custom FoV";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "0.1";
 
     @EventHandler
     public void init(FMLInitializationEvent evt) {
