@@ -1,0 +1,36 @@
+###############
+#    Config   #
+###############
+customfov.general.staticfov=Static FoV
+customfov.general.staticfov.tooltip=Set to true to disable all vanilla FoV modifiers
+
+customfov.general.flying=Flying
+customfov.general.flying.tooltip=Configure flying FoV settings
+customfov.general.flying.modifier=Modifier
+customfov.general.flying.modifier.tooltip=The modifier to multiply by the original FoV modifier
+customfov.general.flying.maxvalue=Max Value
+customfov.general.flying.maxvalue.tooltip=The maximum FoV flying modifier value, -1 for no maximum
+
+customfov.general.aiming=Aiming
+customfov.general.aiming.tooltip=Configure aiming FoV settings
+customfov.general.aiming.modifier=Modifier
+customfov.general.aiming.modifier.tooltip=The modifier to multiply by the original FoV modifier
+customfov.general.aiming.maxvalue=Max Value
+customfov.general.aiming.maxvalue.tooltip=The maximum FoV aiming modifier value, -1 for no maximum
+
+customfov.general.speed=Speed
+customfov.general.speed.tooltip=Configure speed FoV settings
+
+customfov.general.speed.sprinting=Sprinting
+customfov.general.speed.sprinting.tooltip=Configure sprinting FoV settings
+customfov.general.speed.sprinting.modifier=Modifier
+customfov.general.speed.sprinting.modifier.tooltip=The modifier to multiply by the original FoV modifier
+customfov.general.speed.sprinting.maxvalue=Max Value
+customfov.general.speed.sprinting.maxvalue.tooltip=The maximum FoV sprinting modifier value, -1 for no maximum
+
+customfov.general.speed.effects=Effects
+customfov.general.speed.effects.tooltip=Configure speed potion effects FoV settings
+customfov.general.speed.effects.modifier=Modifier
+customfov.general.speed.effects.modifier.tooltip=The modifier to multiply by the original FoV modifier
+customfov.general.speed.effects.maxvalue=Max Value
+customfov.general.speed.effects.maxvalue.tooltip=The maximum FoV effects modifier value, -1 for no maximum
