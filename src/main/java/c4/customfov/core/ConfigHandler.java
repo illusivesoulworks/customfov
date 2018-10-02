@@ -31,26 +31,34 @@ public class ConfigHandler {
 
         @Name("Modifier")
         @Comment("The modifier to multiply by the original FoV modifier")
-        @RangeDouble(min = 0.0D)
         public double modifier = 1.0D;
 
         @Name("Maximum Value")
-        @Comment("The maximum FoV flying modifier value, -1 for no maximum")
-        @RangeDouble(min = -1.0D)
-        public double maxValue = -1.0D;
+        @Comment("The maximum FoV flying modifier value")
+        @RangeDouble(min = -Double.MAX_VALUE)
+        public double maxValue = 10.0D;
+
+        @Name("Minimum Value")
+        @Comment("The minimum FoV flying modifier value")
+        @RangeDouble(min = -Double.MAX_VALUE)
+        public double minValue = -10.0D;
     }
 
     public static class Aiming {
 
         @Name("Modifier")
         @Comment("The modifier to multiply by the original FoV modifier")
-        @RangeDouble(min = 0.0D)
         public double modifier = 1.0D;
 
         @Name("Maximum Value")
-        @Comment("The maximum FoV aiming modifier value, -1 for no maximum")
-        @RangeDouble(min = -1.0D)
-        public double maxValue = -1.0D;
+        @Comment("The maximum FoV aiming modifier value")
+        @RangeDouble(min = -Double.MAX_VALUE)
+        public double maxValue = 10.0D;
+
+        @Name("Minimum Value")
+        @Comment("The minimum FoV aiming modifier value")
+        @RangeDouble(min = -Double.MAX_VALUE)
+        public double minValue = -10.0D;
     }
 
     public static class Speed {
@@ -67,26 +75,34 @@ public class ConfigHandler {
 
             @Name("Modifier")
             @Comment("The modifier to multiply by the original FoV modifier")
-            @RangeDouble(min = 0.0D)
             public double modifier = 1.0D;
 
             @Name("Maximum Value")
-            @Comment("The maximum FoV sprinting modifier value, -1 for no maximum")
-            @RangeDouble(min = -1.0D)
-            public double maxValue = -1.0D;
+            @Comment("The maximum FoV sprinting modifier value")
+            @RangeDouble(min = -Double.MAX_VALUE)
+            public double maxValue = 10.0D;
+
+            @Name("Minimum Value")
+            @Comment("The minimum FoV sprinting modifier value")
+            @RangeDouble(min = -Double.MAX_VALUE)
+            public double minValue = -10.0D;
         }
 
         public class Effects {
 
             @Name("Modifier")
             @Comment("The modifier to multiply by the original FoV modifier")
-            @RangeDouble(min = 0.0D)
             public double modifier = 1.0D;
 
             @Name("Maximum Value")
-            @Comment("The maximum FoV effects modifier value, -1 for no maximum")
-            @RangeDouble(min = -1.0D)
-            public double maxValue = -1.0D;
+            @Comment("The maximum FoV effects modifier value")
+            @RangeDouble(min = -Double.MAX_VALUE)
+            public double maxValue = 10.0D;
+
+            @Name("Minimum Value")
+            @Comment("The minimum FoV effects modifier value")
+            @RangeDouble(min = -Double.MAX_VALUE)
+            public double minValue = -10.0D;
         }
     }
 
