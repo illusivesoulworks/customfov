@@ -42,3 +42,12 @@ customfov.general.speed.effects.maxvalue=Max Value
 customfov.general.speed.effects.maxvalue.tooltip=The maximum FoV effects modifier value
 customfov.general.speed.effects.minvalue=Min Value
 customfov.general.speed.effects.minvalue.tooltip=The minimum FoV effects modifier value
+
+customfov.general.underwater=Underwater
+customfov.general.underwater.tooltip=Configure underwater FoV settings
+customfov.general.underwater.modifier=Modifier
+customfov.general.underwater.modifier.tooltip=The modifier to multiply by the original FoV modifier
+customfov.general.underwater.maxvalue=Max Value
+customfov.general.underwater.maxvalue.tooltip=The maximum FoV underwater modifier value
+customfov.general.underwater.minvalue=Min Value
+customfov.general.underwater.minvalue.tooltip=The minimum FoV underwater modifier value

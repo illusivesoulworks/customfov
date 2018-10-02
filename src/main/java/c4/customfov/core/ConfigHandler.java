@@ -27,6 +27,10 @@ public class ConfigHandler {
     @Comment("Configure speed FoV settings")
     public static final Speed speed = new Speed();
 
+    @Name("Underwater")
+    @Comment("Configure underwater FoV settings")
+    public static final Underwater underwater = new Underwater();
+
     public static class Flying {
 
         @Name("Modifier")
@@ -104,6 +108,23 @@ public class ConfigHandler {
             @RangeDouble(min = -Double.MAX_VALUE)
             public double minValue = -10.0D;
         }
+    }
+
+    public static class Underwater {
+
+        @Name("Modifier")
+        @Comment("The modifier to multiply by the original FoV modifier")
+        public double modifier = 1.0D;
+
+        @Name("Maximum Value")
+        @Comment("The maximum FoV underwater modifier value")
+        @RangeDouble(min = -Double.MAX_VALUE)
+        public double maxValue = 10.0D;
+
+        @Name("Minimum Value")
+        @Comment("The minimum FoV underwater modifier value")
+        @RangeDouble(min = -Double.MAX_VALUE)
+        public double minValue = -10.0D;
     }
 
     @Mod.EventBusSubscriber(modid = CustomFoV.MODID)

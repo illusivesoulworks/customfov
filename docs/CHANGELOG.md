@@ -7,6 +7,7 @@ This project uses MCVERSION-MAJORMOD.MAJORAPI.MINOR.PATCH.
 ## [Unreleased]
 ### Added
 - Minimum FoV modifier value configuration option
+- Underwater FoV options
 ### Changed
 - Released bottom limits on maximum value configuration option
 

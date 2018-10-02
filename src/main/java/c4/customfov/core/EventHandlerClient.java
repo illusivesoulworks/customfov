@@ -1,11 +1,15 @@
 package c4.customfov.core;
 
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -15,6 +19,19 @@ public class EventHandlerClient {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onFoVUpdate(FOVUpdateEvent evt) {
         evt.setNewfov(getNewFovModifier());
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onFoVModifier(EntityViewRenderEvent.FOVModifier evt) {
+        IBlockState iblockstate = ActiveRenderInfo.getBlockStateAtEntityViewpoint(Minecraft.getMinecraft().world, evt.getEntity(),
+                (float)evt.getRenderPartialTicks());
+
+        if (iblockstate.getMaterial() == Material.WATER) {
+            float originalModifier = 60.0F / 70.0F;
+            evt.setFOV(evt.getFOV() / originalModifier * getConfiguredValue(originalModifier,
+                    ConfigHandler.underwater.modifier, ConfigHandler.underwater.maxValue,
+                    ConfigHandler.underwater.minValue));
+        }
     }
 
     private float getNewFovModifier() {
