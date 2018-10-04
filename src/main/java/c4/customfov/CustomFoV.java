@@ -11,16 +11,15 @@ import org.apache.logging.log4j.Level;
 
 @Mod(   modid = CustomFoV.MODID,
         name = CustomFoV.NAME,
-        version = CustomFoV.VERSION,
+        version = "@VERSION@",
         dependencies = "required-after:forge@[14.23.4.2705,)",
         acceptedMinecraftVersions = "[1.12, 1.13)",
-        certificateFingerprint = "5d5b8aee896a4f5ea3f3114784742662a67ad32f",
+        certificateFingerprint = "@FINGERPRINT@",
         clientSideOnly = true)
 public class CustomFoV {
 
     public static final String MODID = "customfov";
     public static final String NAME = "Custom FoV";
-    public static final String VERSION = "0.2";
 
     @EventHandler
     public void init(FMLInitializationEvent evt) {

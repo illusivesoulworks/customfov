@@ -11,9 +11,9 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "1.12.2-0.2"
-group = "c4.customfov" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "customfov"
+version = "${version_minecraft}-${version_mod}"
+group = "${mod_group}.${mod_id}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "${mod_id}"
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
@@ -21,7 +21,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.4.2705"
+    version = "${version_minecraft}-${version_forge}"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
@@ -29,8 +29,11 @@ minecraft {
     // stable_#            stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not always work.
     // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "stable_39"
+    mappings = "${version_mcp}"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    replace '@VERSION@', project.version
+    replace '@FINGERPRINT@', project.findProperty('signSHA1')
+    replaceIn "${mod_class}.java"
 }
 
 dependencies {
