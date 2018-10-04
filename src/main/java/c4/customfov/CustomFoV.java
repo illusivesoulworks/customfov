@@ -15,7 +15,8 @@ import org.apache.logging.log4j.Level;
         dependencies = "required-after:forge@[14.23.4.2705,)",
         acceptedMinecraftVersions = "[1.12, 1.13)",
         certificateFingerprint = "@FINGERPRINT@",
-        clientSideOnly = true)
+        clientSideOnly = true,
+        guiFactory = "c4.customfov.client.gui.SortedGuiConfigFactory")
 public class CustomFoV {
 
     public static final String MODID = "customfov";
