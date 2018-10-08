@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Level;
 @Mod(   modid = CustomFoV.MODID,
         name = CustomFoV.NAME,
         version = "@VERSION@",
-        dependencies = "required-after:forge@[14.23.4.2705,)",
+        dependencies = "required-after:forge@[14.23.5.2768,)",
         acceptedMinecraftVersions = "[1.12, 1.13)",
         certificateFingerprint = "@FINGERPRINT@",
         clientSideOnly = true,
