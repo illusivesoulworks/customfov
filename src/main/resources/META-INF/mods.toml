@@ -1,0 +1,25 @@
+modLoader="javafml"
+loaderVersion="[25,)"
+issueTrackerURL="https://github.com/TheIllusiveC4/CustomFoV/issues"
+displayURL="https://minecraft.curseforge.com/projects/custom-fov"
+logoFile="customfov_icon.png"
+authors="C4"
+[[mods]]
+modId="customfov"
+version="${file.jarVersion}"
+displayName="Custom FoV"
+description='''
+Allows customization of various field of view settings.
+'''
+[[dependencies.comforts]]
+    modId="forge"
+    mandatory=true
+    versionRange="[25,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.comforts]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.13,1.14)"
+    ordering="NONE"
+    side="BOTH"

@@ -1,8 +1,8 @@
 ###############
 #    Config   #
 ###############
-customfov.general.staticfov=Static FoV
-customfov.general.staticfov.tooltip=Set to true to disable all vanilla FoV modifiers
+gui.customfov.config.staticFoV=Static FoV
+gui.customfov.config.staticFoV.tooltip=Set to true to disable all vanilla FoV modifiers
 
 customfov.general.flying=Flying
 customfov.general.flying.tooltip=Configure flying FoV settings
