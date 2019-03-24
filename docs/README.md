@@ -10,7 +10,7 @@ This mod is client-side only.
 
 Disables any and all vanilla field of view changes resulting from flying, aiming, or speed.
 
-## Each of Flying, Aiming, Underwater, and Speed (Sprinting/Effects)
+## Each of Flying, Aiming, Underwater, Sprinting, and Speed Effects
 * Modifier - A decimal number to multiply by the original FoV modifier, used to soften or strengthen FoV changes
 * Max Value - A decimal number that indicates the maximum FoV value allowed for the FoV modifier
 
