@@ -19,10 +19,10 @@
 
 package top.theillusivec4.customfov.core;
 
-import net.minecraftforge.common.ForgeConfig;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.*;
-import org.apache.commons.lang3.tuple.Pair;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.Builder;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import top.theillusivec4.customfov.CustomFoV;
 
 public class FoVConfig {
@@ -132,7 +132,7 @@ public class FoVConfig {
         }
 
         {
-            builder.push("Effects");
+            builder.push("Speed Effects");
 
             effectsModifier = builder
                     .comment("The modifier to multiply by the original FoV modifier")

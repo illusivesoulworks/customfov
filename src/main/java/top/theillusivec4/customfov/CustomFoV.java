@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import top.theillusivec4.customfov.core.EventHandler;
+import top.theillusivec4.customfov.core.EventHandlerFoV;
 import top.theillusivec4.customfov.core.FoVConfig;
 
 @Mod(CustomFoV.MODID)
@@ -39,6 +39,6 @@ public class CustomFoV {
     }
 
     private void setupClient(final FMLClientSetupEvent evt) {
-        MinecraftForge.EVENT_BUS.register(new EventHandler());
+        MinecraftForge.EVENT_BUS.register(new EventHandlerFoV());
     }
 }

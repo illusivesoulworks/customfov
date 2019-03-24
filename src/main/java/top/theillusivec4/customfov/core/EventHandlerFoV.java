@@ -33,7 +33,7 @@ import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class EventHandler {
+public class EventHandlerFoV {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onFoVUpdate(FOVUpdateEvent evt) {
