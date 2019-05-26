@@ -8,6 +8,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumAction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.FOVUpdateEvent;
@@ -28,9 +29,14 @@ public class EventHandlerClient {
 
         if (iblockstate.getMaterial() == Material.WATER) {
             float originalModifier = 60.0F / 70.0F;
-            evt.setFOV(evt.getFOV() / originalModifier * getConfiguredValue(originalModifier,
-                    ConfigHandler.underwater.modifier, ConfigHandler.underwater.maxValue,
-                    ConfigHandler.underwater.minValue));
+            float originalFOV = evt.getFOV() / originalModifier;
+
+            if (ConfigHandler.staticFoV) {
+                evt.setFOV(originalFOV);
+                return;
+            }
+            evt.setFOV(originalFOV * (1.0F - getConfiguredValue((1.0F - originalModifier), ConfigHandler.underwater.modifier,
+                    ConfigHandler.underwater.maxValue, ConfigHandler.underwater.minValue)));
         }
     }
 
@@ -70,7 +76,7 @@ public class EventHandlerClient {
             modifier = 1.0F;
         }
 
-        if (player.isHandActive() && player.getActiveItemStack().getItem() == Items.BOW) {
+        if (player.isHandActive() && player.getActiveItemStack().getItemUseAction() == EnumAction.BOW) {
             int i = player.getItemInUseMaxCount();
             float f1 = (float)i / 20.0F;
 
