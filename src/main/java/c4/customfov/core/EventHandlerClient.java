@@ -18,8 +18,21 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EventHandlerClient {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onFoVUpdate(FOVUpdateEvent evt) {
-        evt.setNewfov(getNewFovModifier());
+    public void onFoVUpdatePre(FOVUpdateEvent evt) {
+
+        if (!ConfigHandler.staticFoV) {
+            evt.setNewfov(getNewFovModifier());
+        } else {
+            evt.setNewfov(1.0F);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onFovUpdatePost(FOVUpdateEvent evt) {
+
+        if (ConfigHandler.superStaticFoV) {
+            evt.setNewfov(1.0F);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -31,7 +44,7 @@ public class EventHandlerClient {
             float originalModifier = 60.0F / 70.0F;
             float originalFOV = evt.getFOV() / originalModifier;
 
-            if (ConfigHandler.staticFoV) {
+            if (ConfigHandler.staticFoV || ConfigHandler.superStaticFoV) {
                 evt.setFOV(originalFOV);
                 return;
             }
@@ -44,15 +57,10 @@ public class EventHandlerClient {
         EntityPlayer player = Minecraft.getMinecraft().player;
         float modifier = 1.0F;
 
-        if (ConfigHandler.staticFoV) {
-            return modifier;
-        }
-
         if (player.capabilities.isFlying) {
             modifier *= 1.0F + getConfiguredValue(0.1F, ConfigHandler.flying.modifier,
                     ConfigHandler.flying.maxValue, ConfigHandler.flying.minValue);
         }
-
         IAttributeInstance iattributeinstance = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
         float speedModifier = (float)((iattributeinstance.getAttributeValue()
                 / (double)player.capabilities.getWalkSpeed() + 1.0D) / 2.0D);
@@ -76,7 +84,7 @@ public class EventHandlerClient {
             modifier = 1.0F;
         }
 
-        if (player.isHandActive() && player.getActiveItemStack().getItemUseAction() == EnumAction.BOW) {
+        if (player.isHandActive() && player.getActiveItemStack().getItem() == Items.BOW) {
             int i = player.getItemInUseMaxCount();
             float f1 = (float)i / 20.0F;
 
@@ -85,11 +93,9 @@ public class EventHandlerClient {
             } else {
                 f1 = f1 * f1;
             }
-
             modifier *= 1.0F - getConfiguredValue(f1 * 0.15F, ConfigHandler.aiming.modifier,
                     ConfigHandler.aiming.maxValue, ConfigHandler.aiming.minValue);
         }
-
         return modifier;
     }
 

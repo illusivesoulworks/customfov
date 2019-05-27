@@ -15,6 +15,10 @@ public class ConfigHandler {
     @Comment("Set to true to disable all vanilla FoV modifiers")
     public static boolean staticFoV = false;
 
+    @Name("Super Static FoV")
+    @Comment("Set to true to disable all FoV modifiers, including modded ones")
+    public static boolean superStaticFoV = false;
+
     @Name("Flying")
     @Comment("Configure flying FoV settings")
     public static final Flying flying = new Flying();

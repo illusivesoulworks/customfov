@@ -3,6 +3,8 @@
 ###############
 customfov.general.staticfov=Static FoV
 customfov.general.staticfov.tooltip=Set to true to disable all vanilla FoV modifiers
+customfov.general.superstaticfov=Super Static FoV
+customfov.general.superstaticfov.tooltip=Set to true to disable all FoV modifiers, including modded ones
 
 customfov.general.flying=Flying
 customfov.general.flying.tooltip=Configure flying FoV settings
