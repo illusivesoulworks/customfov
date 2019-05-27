@@ -36,8 +36,21 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class EventHandlerFoV {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onFoVUpdate(FOVUpdateEvent evt) {
-        evt.setNewfov(getNewFovModifier());
+    public void onFoVUpdatePre(FOVUpdateEvent evt) {
+
+        if (!FoVConfig.staticFoV.get()) {
+            evt.setNewfov(getNewFovModifier());
+        } else {
+            evt.setNewfov(1.0F);
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onFovUpdatePost(FOVUpdateEvent evt) {
+
+        if (FoVConfig.superStaticFoV.get()) {
+            evt.setNewfov(1.0F);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -47,8 +60,14 @@ public class EventHandlerFoV {
 
         if (iblockstate.getMaterial() == Material.WATER) {
             float originalModifier = 60.0F / 70.0F;
-            evt.setFOV(evt.getFOV() / originalModifier * getConfiguredValue(originalModifier, FoVConfig.underwaterModifier.get(),
-                    FoVConfig.underwaterMax.get(), FoVConfig.underwaterMin.get()));
+            double originalFOV = evt.getFOV() / originalModifier;
+
+            if (FoVConfig.staticFoV.get() || FoVConfig.superStaticFoV.get()) {
+                evt.setFOV(originalFOV);
+                return;
+            }
+            evt.setFOV(originalFOV * (1.0F - getConfiguredValue((1.0F - originalModifier), FoVConfig.underwaterModifier.get(),
+                    FoVConfig.underwaterMin.get(), FoVConfig.underwaterMax.get())));
         }
     }
 
@@ -56,15 +75,10 @@ public class EventHandlerFoV {
         EntityPlayer player = Minecraft.getInstance().player;
         float modifier = 1.0F;
 
-        if (FoVConfig.staticFoV.get()) {
-            return modifier;
-        }
-
         if (player.abilities.isFlying) {
             modifier *= 1.0F + getConfiguredValue(0.1F, FoVConfig.flyingModifier.get(), FoVConfig.flyingMax.get(),
                     FoVConfig.flyingMin.get());
         }
-
         IAttributeInstance iattributeinstance = player.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
         float speedModifier = (float)((iattributeinstance.getValue() / (double)player.abilities.getWalkSpeed() + 1.0D) / 2.0D);
         float value = (float)iattributeinstance.getValue();
@@ -94,7 +108,6 @@ public class EventHandlerFoV {
             } else {
                 f1 = f1 * f1;
             }
-
             modifier *= 1.0F - getConfiguredValue(f1 * 0.15F, FoVConfig.aimingModifier.get(), FoVConfig.aimingMax.get(),
                     FoVConfig.aimingMin.get());
         }

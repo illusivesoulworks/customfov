@@ -28,6 +28,7 @@ import top.theillusivec4.customfov.CustomFoV;
 public class FoVConfig {
 
     static final BooleanValue staticFoV;
+    static final BooleanValue superStaticFoV;
 
     //Flying
     static final DoubleValue flyingModifier;
@@ -66,6 +67,11 @@ public class FoVConfig {
                     .comment("Set to true to disable all vanilla FoV modifiers")
                     .translation(CONFIG_PREFIX + "staticFoV")
                     .define("staticFoV", false);
+
+            superStaticFoV = builder
+                    .comment("Set to true to disable all FoV modifiers, including modded ones")
+                    .translation(CONFIG_PREFIX + "superStaticFoV")
+                    .define("superStaticFoV", false);
         }
 
         {
