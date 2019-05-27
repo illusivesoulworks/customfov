@@ -1,7 +1,15 @@
+---
+name: Bug Report
+about: Create a report for crashes, bugs, and other unintended behavior
+title: ''
+labels: bug
+assignees: TheIllusiveC4
+
+---
+
 <!--
 #### Notice
 Please reproduce all issues without any other unnecessary mods before submitting.
-If you are making a suggestion, delete this template.
 -->
 #### Versions (Be specific, do not write "latest"):
 * Custom FoV:
@@ -13,4 +21,5 @@ If you are making a suggestion, delete this template.
 2.
 3.
 ...
-Crash Log: Please use a paste site like [gist](https://gist.github.com/).
+
+Crash Log: Please use a paste site like [hastebin](https://hastebin.com/).
