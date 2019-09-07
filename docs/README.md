@@ -8,7 +8,7 @@ This mod is client-side only.
 
 ## Static FoV
 
-Disables any and all vanilla field of view changes resulting from flying, aiming, or speed.
+Disables any and all vanilla field of view changes resulting from flying, aiming, speed, or being underwater.
 
 ## Each of Flying, Aiming, Underwater, Sprinting, and Speed Effects
 * Modifier - A decimal number to multiply by the original FoV modifier, used to soften or strengthen FoV changes
