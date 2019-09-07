@@ -31,14 +31,14 @@ import top.theillusivec4.customfov.core.FoVConfig;
 @Mod(CustomFoV.MODID)
 public class CustomFoV {
 
-    public static final String MODID = "customfov";
+  public static final String MODID = "customfov";
 
-    public CustomFoV() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, FoVConfig.spec);
-    }
+  public CustomFoV() {
+    FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
+    ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, FoVConfig.spec);
+  }
 
-    private void setupClient(final FMLClientSetupEvent evt) {
-        MinecraftForge.EVENT_BUS.register(new EventHandlerFoV());
-    }
+  private void setupClient(final FMLClientSetupEvent evt) {
+    MinecraftForge.EVENT_BUS.register(new EventHandlerFoV());
+  }
 }
