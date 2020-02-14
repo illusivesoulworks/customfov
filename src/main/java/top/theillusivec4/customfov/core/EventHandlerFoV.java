@@ -65,7 +65,7 @@ public class EventHandlerFoV {
 
     evt.setFOV(originalFOV * (1.0F - getConfiguredValue((1.0F - originalModifier),
         FoVConfig.underwaterModifier.get(),
-        FoVConfig.underwaterMin.get(), FoVConfig.underwaterMax.get())));
+        FoVConfig.underwaterMax.get(), FoVConfig.underwaterMin.get())));
   }
 
   private float getNewFovModifier() {
