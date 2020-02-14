@@ -25,6 +25,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
@@ -49,12 +50,11 @@ public class EventHandlerFoV {
 
   @SubscribeEvent(priority = EventPriority.HIGHEST)
   public void onFoVModifier(EntityViewRenderEvent.FOVModifier evt) {
-    BlockState blockstate = evt.getInfo().getBlockAtCamera();
+    IFluidState ifluidstate = evt.getInfo().getFluidState();
 
-    if (blockstate.getMaterial() != Material.WATER) {
+    if (ifluidstate.isEmpty()) {
       return;
     }
-
     float originalModifier = 60.0F / 70.0F;
     double originalFOV = evt.getFOV() / originalModifier;
 
@@ -65,7 +65,7 @@ public class EventHandlerFoV {
 
     evt.setFOV(originalFOV * (1.0F - getConfiguredValue((1.0F - originalModifier),
         FoVConfig.underwaterModifier.get(),
-        FoVConfig.underwaterMin.get(), FoVConfig.underwaterMax.get())));
+        FoVConfig.underwaterMax.get(), FoVConfig.underwaterMin.get())));
   }
 
   private float getNewFovModifier() {
