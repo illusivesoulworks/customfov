@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project does not adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 This project uses MCVERSION-MAJORMOD.MAJORAPI.MINOR.PATCH.
 
-## [2.0](https://github.com/TheIllusiveC4/CustomFoV/compare/1da95ec09821c80cc71b54499c25cc4b323e3d32...master) - 2019.09.15
+## [2.0.0.1](https://github.com/TheIllusiveC4/CustomFoV/compare/5ebecc65fd51e7acb7efad419d778072df01b464...master) - 2020.02.14
+### Fixed
+- Fixed issue with underwater FoV glitching [#2](https://github.com/TheIllusiveC4/CustomFoV/issues/2)
+
+## [2.0](https://github.com/TheIllusiveC4/CustomFoV/compare/1da95ec09821c80cc71b54499c25cc4b323e3d32...5ebecc65fd51e7acb7efad419d778072df01b464) - 2019.09.15
 ### Changed
 - Updated to Forge RB 28.1.0
 
