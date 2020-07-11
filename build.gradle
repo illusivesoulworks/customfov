@@ -18,6 +18,7 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	implementation "me.zeroeightsix:fiber:${project.fiber_version}"
 }
 
 processResources {
