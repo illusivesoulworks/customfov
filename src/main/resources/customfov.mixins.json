@@ -1,10 +1,14 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "top.theillusivec4.customfov.mixin",
+  "package": "top.theillusivec4.customfov.impl.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [],
-  "client": [],
+  "client": [
+    "PreAbstractClientPlayerEntityMixin",
+    "PostAbstractClientPlayerEntityMixin",
+    "GameRendererMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

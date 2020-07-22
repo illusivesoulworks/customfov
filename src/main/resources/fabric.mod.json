@@ -6,7 +6,7 @@
   "description": "Allows customization of various field of view settings.",
   "authors": ["C4"],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/custom-fov",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/custom-fov-fabric",
     "sources": "https://github.com/TheIllusiveC4/CustomFoV",
     "issues": "https://github.com/TheIllusiveC4/CustomFoV/issues"
   },
@@ -15,7 +15,7 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "top.theillusivec4.customfov.CustomFoV"
+      "top.theillusivec4.customfov.impl.CustomFovMod"
     ]
   },
   "mixins": [
