@@ -1,6 +1,6 @@
 plugins {
-	id 'fabric-loom' version '0.4-SNAPSHOT'
-	id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id 'fabric-loom' version '0.4-SNAPSHOT'
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -14,64 +14,63 @@ minecraft {
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
-	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	implementation "me.zeroeightsix:fiber:${project.fiber_version}"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+
+    modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    implementation "me.zeroeightsix:fiber:${project.fiber_version}"
+    include "me.zeroeightsix:fiber:${project.fiber_version}"
 }
 
 processResources {
-	inputs.property "version", project.version
+    inputs.property "version", project.version
 
-	from(sourceSets.main.resources.srcDirs) {
-		include "fabric.mod.json"
-		expand 'version': project.version
-	}
+    from(sourceSets.main.resources.srcDirs) {
+        include "fabric.mod.json"
+        expand 'version': project.version
+    }
 
-	from(sourceSets.main.resources.srcDirs) {
-		exclude "fabric.mod.json"
-	}
+    from(sourceSets.main.resources.srcDirs) {
+        exclude "fabric.mod.json"
+    }
 }
 
 tasks.withType(JavaCompile) {
-	options.encoding = "UTF-8"
+    options.encoding = "UTF-8"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-	archiveClassifier.set("sources")
-	from sourceSets.main.allSource
+    archiveClassifier.set("sources")
+    from sourceSets.main.allSource
 }
 
 sourceSets {
-	main {
-		resources {
-			srcDirs += 'docs'
-		}
-	}
+    main {
+        resources {
+            srcDirs += 'docs'
+        }
+    }
 }
 
 curseforge {
-	project {
-		apiKey = findProperty('curseKey') ?: 0
-		id = "${curse_id}"
-		releaseType = "${curse_release}"
-		changelogType = 'markdown'
-		changelog = file('docs/CHANGELOG.md')
-		addGameVersion "Java 8"
+    project {
+        apiKey = findProperty('curseKey') ?: 0
+        id = "${curse_id}"
+        releaseType = "${curse_release}"
+        changelogType = 'markdown'
+        changelog = file('docs/CHANGELOG.md')
+        addGameVersion "Java 8"
         addGameVersion "Fabric"
-		addGameVersion project.minecraft_version
-		addArtifact(sourcesJar)
-		mainArtifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
+        addGameVersion project.minecraft_version
+        addArtifact(sourcesJar)
+        mainArtifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
 
-		relations {
-			requiredDependency 'fabric-api'
-		}
-		afterEvaluate {
-			uploadTask.dependsOn(remapJar)
-		}
-	}
-	options {
-		forgeGradleIntegration = false
-	}
+        afterEvaluate {
+            uploadTask.dependsOn(remapJar)
+        }
+    }
+    options {
+        forgeGradleIntegration = false
+    }
 }
