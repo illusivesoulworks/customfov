@@ -28,6 +28,7 @@ import io.github.fablabsmc.fablabs.api.fiber.v1.tree.ConfigTree;
 import io.github.fablabsmc.fablabs.api.fiber.v1.tree.PropertyMirror;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -154,8 +155,14 @@ public class ConfigHandler {
     INSTANCE = builder.build();
   }
 
+  @SuppressWarnings("ResultOfMethodCallIgnored")
   public static void init() {
     JanksonValueSerializer serializer = new JanksonValueSerializer(false);
+    Path config = Paths.get("config");
+
+    if (!Files.exists(config)) {
+      new File("config").mkdir();
+    }
     Path path = Paths.get("config", CustomFovMod.MODID + ".json5");
 
     try (OutputStream stream = new BufferedOutputStream(
