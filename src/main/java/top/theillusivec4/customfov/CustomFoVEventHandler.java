@@ -93,7 +93,7 @@ public class CustomFoVEventHandler {
           1.0F + getConfiguredValue(0.1F, CustomFoVConfig.flyingModifier, CustomFoVConfig.flyingMax,
               CustomFoVConfig.flyingMin);
     }
-    ModifiableAttributeInstance attribute = player.getAttribute(Attributes.field_233821_d_);
+    ModifiableAttributeInstance attribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
 
     if (attribute != null) {
       float speedModifier = (float) (
