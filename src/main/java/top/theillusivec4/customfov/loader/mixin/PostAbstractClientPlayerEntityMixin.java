@@ -17,7 +17,7 @@
  * License along with Custom FoV.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.customfov.impl.mixin;
+package top.theillusivec4.customfov.loader.mixin;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -28,18 +28,18 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import top.theillusivec4.customfov.CustomFovHooks;
+import top.theillusivec4.customfov.core.FovHooks;
 
-@Mixin(value = AbstractClientPlayerEntity.class, priority = 10)
-public abstract class PreAbstractClientPlayerEntityMixin extends PlayerEntity {
+@Mixin(value = AbstractClientPlayerEntity.class, priority = 10000)
+public abstract class PostAbstractClientPlayerEntityMixin extends PlayerEntity {
 
-  public PreAbstractClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
-    super(world, world.getSpawnPos(), profile);
+  public PostAbstractClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
+    super(world, world.getSpawnPos(), world.method_30671(), profile);
   }
 
   @Inject(at = @At("TAIL"), method = "getSpeed()F", cancellable = true)
   private void getSpeed(CallbackInfoReturnable<Float> cb) {
-    CustomFovHooks.getModifiedSpeed(this).ifPresent(cb::setReturnValue);
+    FovHooks.getResetSpeed().ifPresent(cb::setReturnValue);
   }
 
   @Shadow

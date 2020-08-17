@@ -10,12 +10,15 @@
     "sources": "https://github.com/TheIllusiveC4/CustomFoV",
     "issues": "https://github.com/TheIllusiveC4/CustomFoV/issues"
   },
-  "license": "LGPLv3.0",
+  "license": "LGPL-3.0-or-later",
   "icon": "assets/customfov/customfov_icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "top.theillusivec4.customfov.impl.CustomFovMod"
+      "top.theillusivec4.customfov.loader.CustomFovMod"
+    ],
+    "modmenu": [
+      "top.theillusivec4.customfov.loader.integration.CustomFovModMenu"
     ]
   },
   "mixins": [

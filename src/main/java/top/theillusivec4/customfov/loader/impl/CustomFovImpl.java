@@ -17,19 +17,24 @@
  * License along with Custom FoV.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.customfov.impl;
+package top.theillusivec4.customfov.loader.impl;
 
-import net.fabricmc.api.ClientModInitializer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import top.theillusivec4.customfov.core.CustomFov;
+import top.theillusivec4.customfov.core.ModConfig;
 
-public class CustomFovMod implements ClientModInitializer {
+public class CustomFovImpl implements CustomFov {
 
-  public static final String MODID = "customfov";
-  public static final Logger LOGGER = LogManager.getLogger();
+  public static final CustomFov INSTANCE = new CustomFovImpl();
+
+  private ModConfig config = null;
 
   @Override
-  public void onInitializeClient() {
-    ConfigHandler.init();
+  public ModConfig getConfig() {
+    return config;
+  }
+
+  @Override
+  public void setConfig(ModConfig config) {
+    this.config = config;
   }
 }

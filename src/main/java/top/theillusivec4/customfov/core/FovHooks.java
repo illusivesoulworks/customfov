@@ -17,7 +17,7 @@
  * License along with Custom FoV.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package top.theillusivec4.customfov;
+package top.theillusivec4.customfov.core;
 
 import java.util.Optional;
 import net.minecraft.client.render.Camera;
@@ -26,19 +26,20 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Items;
-import net.minecraft.util.math.MathHelper;
-import top.theillusivec4.customfov.config.CustomFovConfig;
-import top.theillusivec4.customfov.config.CustomFovConfig.FovPermission;
+import top.theillusivec4.customfov.core.ModConfig.FovPermission;
+import top.theillusivec4.customfov.core.ModConfig.FovType;
 
-public class CustomFovHooks {
+public class FovHooks {
 
   private static float modifiedSpeed;
 
   public static Optional<Float> getResetSpeed() {
+    ModConfig config = CustomFov.getInstance().getConfig();
+    FovPermission fovPermission = config.getFovPermission();
 
-    if (CustomFovConfig.getFovPermission() == FovPermission.NONE) {
+    if (fovPermission == FovPermission.NONE) {
       return Optional.of(1.0F);
-    } else if (CustomFovConfig.getFovPermission() == FovPermission.VANILLA) {
+    } else if (fovPermission == FovPermission.VANILLA) {
       return Optional.of(modifiedSpeed);
     }
     return Optional.empty();
@@ -52,29 +53,30 @@ public class CustomFovHooks {
     }
     float originalModifier = 60.0F / 70.0F;
     double originalFOV = fov / originalModifier;
+    ModConfig config = CustomFov.getInstance().getConfig();
+    FovPermission fovPermission = config.getFovPermission();
 
-    if (CustomFovConfig.getFovPermission() == FovPermission.NONE
-        || CustomFovConfig.getFovPermission() == FovPermission.MODDED) {
+    if (fovPermission == FovPermission.NONE || fovPermission == FovPermission.MODDED) {
       return Optional.of(originalFOV);
     } else {
-      return Optional.of(originalFOV * (1.0F - getConfiguredValue((1.0F - originalModifier),
-          CustomFovConfig.getUnderwaterModifier(), CustomFovConfig.getUnderwaterMax(),
-          CustomFovConfig.getUnderwaterMin())));
+      return Optional.of(originalFOV * (1.0F - config
+          .getBoundFov(1.0F - originalModifier, FovType.UNDERWATER)));
     }
   }
 
   public static Optional<Float> getModifiedSpeed(PlayerEntity playerEntity) {
+    ModConfig config = CustomFov.getInstance().getConfig();
+    FovPermission fovPermission = config.getFovPermission();
 
-    if (CustomFovConfig.getFovPermission() != FovPermission.NONE) {
+    if (fovPermission != FovPermission.NONE) {
 
-      if (CustomFovConfig.getFovPermission() == FovPermission.MODDED) {
+      if (fovPermission == FovPermission.MODDED) {
         return Optional.of(1.0F);
       } else {
         float modifier = 1.0F;
 
         if (playerEntity.abilities.flying) {
-          modifier *= 1.0F + getConfiguredValue(0.1F, CustomFovConfig.getFlyingModifier(),
-              CustomFovConfig.getFlyingMax(), CustomFovConfig.getFlyingMin());
+          modifier *= 1.0F + config.getBoundFov(0.1F, FovType.FLYING);
         }
         EntityAttributeInstance attribute = playerEntity
             .getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
@@ -87,15 +89,13 @@ public class CustomFovHooks {
           float effPercent = Math.abs(
               (value / (playerEntity.isSprinting() ? 1.3F : 1.0F) - playerEntity.abilities
                   .getWalkSpeed()) / (value - playerEntity.abilities.getWalkSpeed()));
-          float configModifier = getConfiguredValue(effPercent * (speedModifier - 1),
-              CustomFovConfig.getEffectsModifier(), CustomFovConfig.getEffectsMax(),
-              CustomFovConfig.getEffectsMin());
+          double configModifier = config
+              .getBoundFov(effPercent * (speedModifier - 1), FovType.EFFECTS);
 
           if (playerEntity.isSprinting()) {
             float sprintPercent = 1.0F - effPercent;
-            float sprintModifier = getConfiguredValue(sprintPercent * (speedModifier - 1),
-                CustomFovConfig.getSprintingModifier(), CustomFovConfig.getSprintingMax(),
-                CustomFovConfig.getSprintingMin());
+            double sprintModifier = config
+                .getBoundFov(sprintPercent * (speedModifier - 1), FovType.SPRINTING);
             configModifier += sprintModifier;
           }
           modifier = (float) ((double) modifier * (1.0D + configModifier));
@@ -115,17 +115,12 @@ public class CustomFovHooks {
           } else {
             g *= g;
           }
-          modifier *= 1.0F - getConfiguredValue(g * 0.15F, CustomFovConfig.getAimingModifier(),
-              CustomFovConfig.getAimingMax(), CustomFovConfig.getAimingMin());
+          modifier *= 1.0F - config.getBoundFov(g * 0.15F, FovType.AIMING);
         }
         modifiedSpeed = modifier;
         return Optional.of(modifiedSpeed);
       }
     }
     return Optional.empty();
-  }
-
-  private static float getConfiguredValue(float original, double modifier, double max, double min) {
-    return (float) MathHelper.clamp(original * modifier, min, max);
   }
 }
