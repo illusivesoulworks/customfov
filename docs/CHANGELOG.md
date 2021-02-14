@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project does not adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 This project uses MCVERSION-MAJORMOD.MAJORAPI.MINOR.PATCH.
 
+## [1.16.5-5.1.0.1] - 2021.02.14
+### Changed
+- Updated to 1.16.5
+### Fixed
+- Fixed sprinting and effects interlacing modifiers
+
 ## [1.16.4-5.1.0.0] - 2020.11.15
 ### Changed
 - Updated to 1.16.4

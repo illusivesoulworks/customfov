@@ -96,23 +96,28 @@ public class CustomFoVEventHandler {
     ModifiableAttributeInstance attribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
 
     if (attribute != null) {
-      float speedModifier = (float) (
-          (attribute.getValue() / (double) player.abilities.getWalkSpeed() + 1.0D) / 2.0D);
       float value = (float) attribute.getValue();
-      float effPercent = Math.abs(
-          (value / (player.isSprinting() ? 1.3F : 1.0F) - player.abilities.getWalkSpeed()) / (value
-              - player.abilities.getWalkSpeed()));
-      float configModifier = getConfiguredValue(effPercent * (speedModifier - 1),
-          CustomFoVConfig.effectsModifier, CustomFoVConfig.effectsMax, CustomFoVConfig.effectsMin);
+      float walkingSpeed = player.abilities.getWalkSpeed();
 
-      if (player.isSprinting()) {
-        float sprintPercent = 1.0F - effPercent;
-        float sprintModifier = getConfiguredValue(sprintPercent * (speedModifier - 1),
-            CustomFoVConfig.sprintingModifier, CustomFoVConfig.sprintingMax,
-            CustomFoVConfig.sprintingMin);
-        configModifier += sprintModifier;
+      if (value != walkingSpeed) {
+
+        if (player.isSprinting()) {
+          float effects = (value / 1.30000001192092896F) - walkingSpeed;
+          float sprint = 0.30000001192092896F;
+          effects = getConfiguredValue(effects, CustomFoVConfig.effectsModifier,
+              CustomFoVConfig.effectsMax, CustomFoVConfig.effectsMin);
+          sprint = getConfiguredValue(sprint, CustomFoVConfig.sprintingModifier,
+              CustomFoVConfig.sprintingMax, CustomFoVConfig.sprintingMin);
+          double modified = (walkingSpeed + effects) * (1.0F + sprint);
+          modifier = (float) ((double) modifier * (modified / walkingSpeed + 1.0F) / 2.0F);
+        } else {
+          float effects = getConfiguredValue(value - walkingSpeed, CustomFoVConfig.effectsModifier,
+              CustomFoVConfig.effectsMax, CustomFoVConfig.effectsMin);
+          modifier =
+              (float) ((double) modifier * ((effects + walkingSpeed) / walkingSpeed + 1.0F) /
+                  2.0F);
+        }
       }
-      modifier = (float) ((double) modifier * (1.0D + configModifier));
     }
 
     if (player.abilities.getWalkSpeed() == 0.0F || Float.isNaN(modifier) || Float
