@@ -19,11 +19,10 @@
 
 package top.theillusivec4.customfov.loader.impl;
 
-import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
-import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
-import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
-import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry.Gui.Tooltip;
-import me.sargunvohra.mcmods.autoconfig1u.shadowed.blue.endless.jankson.Comment;
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 import net.minecraft.util.math.MathHelper;
 import top.theillusivec4.customfov.core.CustomFov;
 import top.theillusivec4.customfov.core.ModConfig;
@@ -31,7 +30,7 @@ import top.theillusivec4.customfov.core.ModConfig;
 @Config(name = CustomFov.MODID)
 public class ModConfigImpl implements ConfigData, ModConfig {
 
-  @Tooltip(count = 5)
+  @ConfigEntry.Gui.Tooltip(count = 5)
   @Comment("Determines which source is allowed to change FoV\n" + "NONE: No FoV changes allowed\n"
       + "VANILLA: Only vanilla FoV changes will be allowed\n"
       + "MODDED: Only modded FoV changes will be allowed\n"
@@ -39,27 +38,27 @@ public class ModConfigImpl implements ConfigData, ModConfig {
   public FovPermission fovPermission = FovPermission.ALL;
 
   @ConfigEntry.Gui.CollapsibleObject
-  @Tooltip
+  @ConfigEntry.Gui.Tooltip
   @Comment("FoV settings for flying")
   public FovConfig flying = new FovConfig();
 
   @ConfigEntry.Gui.CollapsibleObject
-  @Tooltip
+  @ConfigEntry.Gui.Tooltip
   @Comment("FoV settings for sprinting")
   public FovConfig sprinting = new FovConfig();
 
   @ConfigEntry.Gui.CollapsibleObject
-  @Tooltip
+  @ConfigEntry.Gui.Tooltip
   @Comment("FoV settings for speed effects")
   public FovConfig effects = new FovConfig();
 
   @ConfigEntry.Gui.CollapsibleObject
-  @Tooltip
+  @ConfigEntry.Gui.Tooltip
   @Comment("FoV settings for aiming")
   public FovConfig aiming = new FovConfig();
 
   @ConfigEntry.Gui.CollapsibleObject
-  @Tooltip
+  @ConfigEntry.Gui.Tooltip
   @Comment("FoV settings for underwater vision")
   public FovConfig underwater = new FovConfig();
 
@@ -100,13 +99,13 @@ public class ModConfigImpl implements ConfigData, ModConfig {
 
   private static class FovConfig {
 
-    @Tooltip
+    @ConfigEntry.Gui.Tooltip
     @Comment("The modifier to multiply by the original FoV modifier")
     private double modifier = 1.0D;
-    @Tooltip
+    @ConfigEntry.Gui.Tooltip
     @Comment("The minimum FoV modifier value")
     private double min = -10.0D;
-    @Tooltip
+    @ConfigEntry.Gui.Tooltip
     @Comment("The maximum FoV modifier value")
     private double max = 10.0D;
   }

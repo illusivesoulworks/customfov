@@ -19,9 +19,9 @@
 
 package top.theillusivec4.customfov.loader.integration;
 
-import io.github.prospector.modmenu.api.ConfigScreenFactory;
-import io.github.prospector.modmenu.api.ModMenuApi;
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import com.terraformersmc.modmenu.api.ModMenuApi;
+import me.shedaniel.autoconfig.AutoConfig;
 import top.theillusivec4.customfov.loader.impl.ModConfigImpl;
 
 public class CustomFovModMenu implements ModMenuApi {

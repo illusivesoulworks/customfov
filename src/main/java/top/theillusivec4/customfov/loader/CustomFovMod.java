@@ -19,8 +19,8 @@
 
 package top.theillusivec4.customfov.loader;
 
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import top.theillusivec4.customfov.core.CustomFov;
 import top.theillusivec4.customfov.core.ModConfig;
@@ -30,8 +30,8 @@ public class CustomFovMod implements ClientModInitializer {
 
   @Override
   public void onInitializeClient() {
-    ModConfig config = AutoConfig.register(ModConfigImpl.class, JanksonConfigSerializer::new)
-        .getConfig();
+    ModConfig config =
+        AutoConfig.register(ModConfigImpl.class, JanksonConfigSerializer::new).getConfig();
     CustomFov.getInstance().setConfig(config);
   }
 }
