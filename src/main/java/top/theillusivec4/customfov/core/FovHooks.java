@@ -82,23 +82,25 @@ public class FovHooks {
             .getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
 
         if (attribute != null) {
-          float speedModifier = (float) (
-              (attribute.getValue() / (double) playerEntity.abilities.getWalkSpeed() + 1.0D)
-                  / 2.0D);
           float value = (float) attribute.getValue();
-          float effPercent = Math.abs(
-              (value / (playerEntity.isSprinting() ? 1.3F : 1.0F) - playerEntity.abilities
-                  .getWalkSpeed()) / (value - playerEntity.abilities.getWalkSpeed()));
-          double configModifier = config
-              .getBoundFov(effPercent * (speedModifier - 1), FovType.EFFECTS);
+          float walkingSpeed = playerEntity.abilities.getWalkSpeed();
 
-          if (playerEntity.isSprinting()) {
-            float sprintPercent = 1.0F - effPercent;
-            double sprintModifier = config
-                .getBoundFov(sprintPercent * (speedModifier - 1), FovType.SPRINTING);
-            configModifier += sprintModifier;
+          if (value != walkingSpeed) {
+
+            if (playerEntity.isSprinting()) {
+              double effects = (value / 1.30000001192092896F) - walkingSpeed;
+              double sprint = 0.30000001192092896F;
+              effects = config.getBoundFov(effects, FovType.EFFECTS);
+              sprint = config.getBoundFov(sprint, FovType.SPRINTING);
+              double modified = (walkingSpeed + effects) * (1.0F + sprint);
+              modifier = (float) ((double) modifier * (modified / walkingSpeed + 1.0F) / 2.0F);
+            } else {
+              double effects = config.getBoundFov(value - walkingSpeed, FovType.EFFECTS);
+              modifier =
+                  (float) ((double) modifier * ((effects + walkingSpeed) / walkingSpeed + 1.0F) /
+                      2.0F);
+            }
           }
-          modifier = (float) ((double) modifier * (1.0D + configModifier));
         }
 
         if (playerEntity.abilities.getWalkSpeed() == 0.0F || Float.isNaN(modifier) || Float
