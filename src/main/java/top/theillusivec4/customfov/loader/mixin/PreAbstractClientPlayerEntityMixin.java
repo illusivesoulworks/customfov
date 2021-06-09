@@ -34,7 +34,7 @@ import top.theillusivec4.customfov.core.FovHooks;
 public abstract class PreAbstractClientPlayerEntityMixin extends PlayerEntity {
 
   public PreAbstractClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
-    super(world, world.getSpawnPos(), world.method_30671(), profile);
+    super(world, world.getSpawnPos(), world.getSpawnAngle(), profile);
   }
 
   @Inject(at = @At("TAIL"), method = "getSpeed()F", cancellable = true)

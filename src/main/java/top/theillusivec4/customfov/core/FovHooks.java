@@ -20,12 +20,14 @@
 package top.theillusivec4.customfov.core;
 
 import java.util.Optional;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
+import net.minecraft.client.render.CameraSubmersionType;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Items;
+import net.minecraft.util.math.MathHelper;
 import top.theillusivec4.customfov.core.ModConfig.FovPermission;
 import top.theillusivec4.customfov.core.ModConfig.FovType;
 
@@ -46,12 +48,15 @@ public class FovHooks {
   }
 
   public static Optional<Double> getModifiedFov(Camera camera, double fov) {
-    FluidState fluidstate = camera.getSubmergedFluidState();
+    CameraSubmersionType cameraSubmersionType = camera.getSubmersionType();
 
-    if (fluidstate.isEmpty()) {
+    if (cameraSubmersionType == CameraSubmersionType.NONE ||
+        cameraSubmersionType == CameraSubmersionType.POWDER_SNOW) {
       return Optional.empty();
     }
-    float originalModifier = 60.0F / 70.0F;
+    float originalModifier =
+        MathHelper.lerp(MinecraftClient.getInstance().options.fovEffectScale, 1.0F, 0.85714287F);
+    ;
     double originalFOV = fov / originalModifier;
     ModConfig config = CustomFov.getInstance().getConfig();
     FovPermission fovPermission = config.getFovPermission();
@@ -75,7 +80,7 @@ public class FovHooks {
       } else {
         float modifier = 1.0F;
 
-        if (playerEntity.abilities.flying) {
+        if (playerEntity.getAbilities().flying) {
           modifier *= 1.0F + config.getBoundFov(0.1F, FovType.FLYING);
         }
         EntityAttributeInstance attribute = playerEntity
@@ -83,7 +88,7 @@ public class FovHooks {
 
         if (attribute != null) {
           float value = (float) attribute.getValue();
-          float walkingSpeed = playerEntity.abilities.getWalkSpeed();
+          float walkingSpeed = playerEntity.getAbilities().getWalkSpeed();
 
           if (value != walkingSpeed) {
 
@@ -103,7 +108,7 @@ public class FovHooks {
           }
         }
 
-        if (playerEntity.abilities.getWalkSpeed() == 0.0F || Float.isNaN(modifier) || Float
+        if (playerEntity.getAbilities().getWalkSpeed() == 0.0F || Float.isNaN(modifier) || Float
             .isInfinite(modifier)) {
           modifier = 1.0F;
         }
