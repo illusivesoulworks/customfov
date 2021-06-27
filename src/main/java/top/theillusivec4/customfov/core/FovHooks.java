@@ -56,7 +56,6 @@ public class FovHooks {
     }
     float originalModifier =
         MathHelper.lerp(MinecraftClient.getInstance().options.fovEffectScale, 1.0F, 0.85714287F);
-    ;
     double originalFOV = fov / originalModifier;
     ModConfig config = CustomFov.getInstance().getConfig();
     FovPermission fovPermission = config.getFovPermission();
@@ -124,6 +123,7 @@ public class FovHooks {
           }
           modifier *= 1.0F - config.getBoundFov(g * 0.15F, FovType.AIMING);
         }
+
         if (playerEntity.isUsingSpyglass()) {
           modifier *= 0.1F;
         }

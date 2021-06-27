@@ -75,7 +75,7 @@ curseforge {
         mainArtifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
 
         relations {
-            requiredDependency 'cloth-config'
+            embeddedLibrary 'cloth-config'
             optionalDependency 'modmenu'
         }
 
