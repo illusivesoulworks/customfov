@@ -124,6 +124,9 @@ public class FovHooks {
           }
           modifier *= 1.0F - config.getBoundFov(g * 0.15F, FovType.AIMING);
         }
+        if (playerEntity.isUsingSpyglass()) {
+          modifier *= 0.1F;
+        }
         modifiedSpeed = modifier;
         return Optional.of(modifiedSpeed);
       }
