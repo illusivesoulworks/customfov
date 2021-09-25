@@ -1,20 +1,22 @@
 /*
- * Copyright (C) 2018-2019  C4
+ * Copyright (C) 2018-2021 C4
  *
- * This file is part of CustomFoV, a mod made for Minecraft.
+ * This file is part of Custom FoV.
  *
- * CustomFoV is free software: you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published
- * by the Free Software Foundation, either version 3 of the License, or
+ * Custom FoV is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * CustomFoV is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * Custom FoV is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with CustomFoV.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * and the GNU Lesser General Public License along with Custom FoV.
+ * If not, see <https://www.gnu.org/licenses/>.
+ *
  */
 
 package top.theillusivec4.customfov;
@@ -24,11 +26,11 @@ import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.EnumValue;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class CustomFoVConfig {
+public class CustomFovConfig {
 
   static final ForgeConfigSpec CONFIG_SPEC;
   static final Config CONFIG;
-  private static final String CONFIG_PREFIX = "gui." + CustomFoV.MODID + ".config.";
+  private static final String CONFIG_PREFIX = "gui." + CustomFovMod.MOD_ID + ".config.";
 
   static {
     final Pair<Config, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder()
@@ -108,12 +110,13 @@ public class CustomFoVConfig {
     final DoubleValue underwaterMin;
 
     public Config(ForgeConfigSpec.Builder builder) {
-
       fovChangePermission = builder.comment(
-          "Determines which source is allowed to change FoV" + "\nNONE - No FoV changes allowed"
-              + "\nVANILLA - Only vanilla FoV changes will be applied"
-              + "\nMODDED - Only modded FoV changes will be applied"
-              + "\nALL - All FoV changes will be applied")
+              """
+                  Determines which source is allowed to change FoV
+                  NONE - No FoV changes allowed
+                  VANILLA - Only vanilla FoV changes will be applied
+                  MODDED - Only modded FoV changes will be applied
+                  ALL - All FoV changes will be applied""")
           .translation(CONFIG_PREFIX + "fovChangePermission")
           .defineEnum("fovChangePermission", FovChangePermission.ALL);
 
