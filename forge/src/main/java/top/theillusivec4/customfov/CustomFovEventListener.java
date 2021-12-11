@@ -30,7 +30,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.FogType;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.client.event.FOVModifierEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import top.theillusivec4.customfov.CustomFovConfig.FovChangePermission;
@@ -41,7 +41,7 @@ public class CustomFovEventListener {
   private static float fovModifier;
 
   @SubscribeEvent(priority = EventPriority.HIGHEST)
-  public void foVUpdatePre(FOVUpdateEvent evt) {
+  public void foVUpdatePre(FOVModifierEvent evt) {
 
     if (CustomFovConfig.fovChangePermission != FovChangePermission.NONE) {
 
@@ -55,7 +55,7 @@ public class CustomFovEventListener {
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
-  public void fovUpdatePost(FOVUpdateEvent evt) {
+  public void fovUpdatePost(FOVModifierEvent evt) {
 
     if (CustomFovConfig.fovChangePermission == FovChangePermission.NONE) {
       evt.setNewfov(1.0F);
@@ -65,8 +65,8 @@ public class CustomFovEventListener {
   }
 
   @SubscribeEvent(priority = EventPriority.HIGHEST)
-  public void onFoVModifier(EntityViewRenderEvent.FOVModifier evt) {
-    FogType fogType = evt.getInfo().getFluidInCamera();
+  public void onFoVModifier(EntityViewRenderEvent.FieldOfView evt) {
+    FogType fogType = evt.getCamera().getFluidInCamera();
 
     if (fogType != FogType.LAVA && fogType != FogType.WATER) {
       return;
