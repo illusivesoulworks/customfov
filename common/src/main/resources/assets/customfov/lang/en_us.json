@@ -1,0 +1,22 @@
+{
+  "options.fovEffectScale.tooltip": "Controls how much the field of view can change in general.",
+  "customfov.options.submergedFovEffectScale": "Submerged FOV Effects",
+  "customfov.options.submergedFovEffectScale.tooltip": "Controls how much the field of view can change when underwater.",
+  "customfov.options.flyingFovEffectScale": "Flying FOV Effects",
+  "customfov.options.flyingFovEffectScale.tooltip": "Controls how much the field of view can change when flying.",
+  "customfov.options.sprintingFovEffectScale": "Sprinting FOV Effects",
+  "customfov.options.sprintingFovEffectScale.tooltip": "Controls how much the field of view can change when sprinting.",
+  "customfov.options.speedFovEffectScale": "Speed FOV Effects",
+  "customfov.options.speedFovEffectScale.tooltip": "Controls how much the field of view can change from speed effects.",
+  "customfov.options.aimingFovEffectScale": "Aiming FOV Effects",
+  "customfov.options.aimingFovEffectScale.tooltip": "Controls how much the field of view can change when aiming.",
+  "customfov.options.fovEffectsMode": "FOV Effects Mode",
+  "customfov.options.fovEffectsMode.none": "None",
+  "customfov.options.fovEffectsMode.none.tooltip": "The field of view cannot change from any behavior.",
+  "customfov.options.fovEffectsMode.vanillaOnly": "Vanilla",
+  "customfov.options.fovEffectsMode.vanillaOnly.tooltip": "The field of view can only change from vanilla behavior.",
+  "customfov.options.fovEffectsMode.moddedOnly": "Modded",
+  "customfov.options.fovEffectsMode.moddedOnly.tooltip": "The field of view can only change from modded behavior.",
+  "customfov.options.fovEffectsMode.all": "All",
+  "customfov.options.fovEffectsMode.all.tooltip": "The field of view can change from any behavior."
+}

@@ -1,17 +1,16 @@
 modLoader="javafml"
-loaderVersion="${loader_version}"
-license="LGPL-3.0-or-later"
-issueTrackerURL="https://github.com/TheIllusiveC4/CustomFoV/issues"
-logoFile="customfov_icon.png"
+loaderVersion="[41,)"
+license="${license}"
 logoBlur=false
+issueTrackerURL="${issue_tracker}"
+logoFile="${mod_id}_icon.png"
 [[mods]]
-modId="customfov"
+modId="${mod_id}"
 version="${version}"
-displayName="Custom FoV"
-displayURL="https://github.com/TheIllusiveC4/CustomFoV"
-authors="C4"
+displayName="${mod_name}"
+authors="${mod_author}"
 description='''
-Allows customization of various field of view settings.
+${mod_description}
 '''
 [[dependencies.customfov]]
     modId="forge"
@@ -22,6 +21,6 @@ Allows customization of various field of view settings.
 [[dependencies.customfov]]
     modId="minecraft"
     mandatory=true
-    versionRange="${mc_version_range}"
+    versionRange="${forge_mc_version_range}"
     ordering="NONE"
     side="CLIENT"

@@ -1,32 +1,28 @@
 {
   "schemaVersion": 1,
-  "id": "customfov",
+  "id": "${mod_id}",
   "version": "${version}",
-  "name": "Custom FoV",
-  "description": "Allows customization of various field of view settings.",
-  "authors": ["C4"],
-  "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/custom-fov-fabric",
-    "sources": "https://github.com/TheIllusiveC4/CustomFoV",
-    "issues": "https://github.com/TheIllusiveC4/CustomFoV/issues"
-  },
-  "license": "LGPL-3.0-or-later",
-  "icon": "assets/customfov/customfov_icon.png",
-  "environment": "client",
-  "entrypoints": {
-    "client": [
-      "top.theillusivec4.customfov.loader.CustomFovMod"
-    ],
-    "modmenu": [
-      "top.theillusivec4.customfov.loader.integration.CustomFovModMenu"
-    ]
-  },
-  "mixins": [
-    "customfov.mixins.json"
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_author}"
   ],
+  "contact": {
+    "issues": "${issue_tracker}"
+  },
+  "license": "${license}",
+  "icon": "${mod_id}_icon.png",
+  "environment": "*",
+  "entrypoints": {},
+  "mixins": [
+    "customfov.mixins.json",
+    "customfov.fabric.mixins.json"
+  ],
+  "accessWidener" : "customfov.accesswidener",
   "depends": {
-    "fabricloader": ">=0.11.3",
-    "cloth-config2": "*",
-    "minecraft": "1.18.x"
+    "fabricloader": ">=0.14",
+    "fabric": "*",
+    "minecraft": "${fabric_mc_version_range}",
+    "java": ">=17"
   }
 }
