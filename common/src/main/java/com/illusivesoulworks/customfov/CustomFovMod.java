@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -55,30 +56,24 @@ public class CustomFovMod {
   private static final OptionInstance<Double> AIMING =
       createFovOption("aimingFovEffectScale");
   private static final OptionInstance<FovEffectsMode> FOV_EFFECTS_MODE =
-      new OptionInstance<>("customfov.options.fovEffectsMode", (client) -> {
-        List<FormattedCharSequence> list1 = splitTooltip(client,
-            Component.translatable("customfov.options.fovEffectsMode.none.tooltip"));
-        List<FormattedCharSequence> list2 = splitTooltip(client,
-            Component.translatable("customfov.options.fovEffectsMode.vanillaOnly.tooltip"));
-        List<FormattedCharSequence> list3 = splitTooltip(client,
-            Component.translatable("customfov.options.fovEffectsMode.moddedOnly.tooltip"));
-        List<FormattedCharSequence> list4 = splitTooltip(client,
-            Component.translatable("customfov.options.fovEffectsMode.all.tooltip"));
-        return (val) -> switch (val) {
-          case NONE -> list1;
-          case VANILLA_ONLY -> list2;
-          case MODDED_ONLY -> list3;
-          case ALL -> list4;
+      new OptionInstance<>("customfov.options.fovEffectsMode", fovEffectsMode -> {
+
+        Tooltip tooltip1 = Tooltip.create(Component.translatable("customfov.options.fovEffectsMode.none.tooltip"));
+        Tooltip tooltip2 = Tooltip.create(Component.translatable("customfov.options.fovEffectsMode.vanillaOnly.tooltip"));
+        Tooltip tooltip3 = Tooltip.create(Component.translatable("customfov.options.fovEffectsMode.moddedOnly.tooltip"));
+        Tooltip tooltip4 = Tooltip.create(Component.translatable("customfov.options.fovEffectsMode.all.tooltip"));
+
+        return switch (fovEffectsMode) {
+          case NONE -> tooltip1;
+          case VANILLA_ONLY -> tooltip2;
+          case MODDED_ONLY -> tooltip3;
+          case ALL -> tooltip4;
         };
       }, OptionInstance.forOptionEnum(),
           new OptionInstance.Enum<>(Arrays.asList(FovEffectsMode.values()),
               Codec.INT.xmap(FovEffectsMode::byId, FovEffectsMode::getId)),
           FovEffectsMode.ALL, (val) -> {
       });
-
-  private static List<FormattedCharSequence> splitTooltip(Minecraft client, Component component) {
-    return client.font.split(component, 200);
-  }
 
   private static OptionInstance<Double> createFovOption(String keyIn) {
     String key = "customfov.options." + keyIn;
