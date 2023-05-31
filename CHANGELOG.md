@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 Prior to version 6.0.0, this project used MCVERSION-MAJORMOD.MAJORAPI.MINOR.PATCH.
 
+## [6.1.0+1.19.4] - 2023.05.31
+### Added
+- Added Quilt support
+### Changed
+- Updated to Minecraft 1.19.4
+
 ## [6.0.0-beta.1+1.19.2] - 2022.08.25
 ### Changed
 - Configuration can now be done through the Minecraft Options menu, under both Video Settings and Accessibility Settings
