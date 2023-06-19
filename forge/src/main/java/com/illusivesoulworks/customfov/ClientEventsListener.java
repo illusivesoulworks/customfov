@@ -20,6 +20,7 @@ package com.illusivesoulworks.customfov;
 import net.minecraftforge.client.event.ComputeFovModifierEvent;
 import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 
 public class ClientEventsListener {
@@ -30,6 +31,11 @@ public class ClientEventsListener {
     MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST,
         ClientEventsListener::postComputeFov);
     MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, ClientEventsListener::viewportFov);
+    MinecraftForge.EVENT_BUS.addListener(ClientEventsListener::tick);
+  }
+
+  private static void tick(final TickEvent.ClientTickEvent evt) {
+    CustomFovMod.tick();
   }
 
   private static void preComputeFov(final ComputeFovModifierEvent evt) {

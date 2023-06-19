@@ -17,23 +17,32 @@
 
 package com.illusivesoulworks.customfov;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.serialization.Codec;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Camera;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.OptionEnum;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -58,10 +67,14 @@ public class CustomFovMod {
   private static final OptionInstance<FovEffectsMode> FOV_EFFECTS_MODE =
       new OptionInstance<>("customfov.options.fovEffectsMode", fovEffectsMode -> {
 
-        Tooltip tooltip1 = Tooltip.create(Component.translatable("customfov.options.fovEffectsMode.none.tooltip"));
-        Tooltip tooltip2 = Tooltip.create(Component.translatable("customfov.options.fovEffectsMode.vanillaOnly.tooltip"));
-        Tooltip tooltip3 = Tooltip.create(Component.translatable("customfov.options.fovEffectsMode.moddedOnly.tooltip"));
-        Tooltip tooltip4 = Tooltip.create(Component.translatable("customfov.options.fovEffectsMode.all.tooltip"));
+        Tooltip tooltip1 =
+            Tooltip.create(Component.translatable("customfov.options.fovEffectsMode.none.tooltip"));
+        Tooltip tooltip2 = Tooltip.create(
+            Component.translatable("customfov.options.fovEffectsMode.vanillaOnly.tooltip"));
+        Tooltip tooltip3 = Tooltip.create(
+            Component.translatable("customfov.options.fovEffectsMode.moddedOnly.tooltip"));
+        Tooltip tooltip4 =
+            Tooltip.create(Component.translatable("customfov.options.fovEffectsMode.all.tooltip"));
 
         return switch (fovEffectsMode) {
           case NONE -> tooltip1;
@@ -87,6 +100,140 @@ public class CustomFovMod {
     });
   }
 
+  private static final Map<Integer, Map<String, Object>> profiles = new HashMap<>();
+  private static int activeProfile = 1;
+  private static KeyMapping toggleKey;
+  private static int cooldown = 0;
+
+  public static KeyMapping registerKeys() {
+    toggleKey = new KeyMapping("key.customfov.profile.desc", InputConstants.UNKNOWN.getValue(),
+        "key.customfov.category");
+    return toggleKey;
+  }
+
+  public static void tick() {
+    Minecraft mc = Minecraft.getInstance();
+
+    if (mc.player != null && mc.level != null && cooldown <= 0 &&
+        toggleKey.isDown()) {
+      cooldown = 20;
+      Player player = mc.player;
+      Map<String, Object> currentSettings = new LinkedHashMap<>();
+      Map<String, OptionInstance<?>> options = getOptions();
+      options.put("fov", Minecraft.getInstance().options.fov());
+      options.forEach((key, option) -> currentSettings.put(key, option.get()));
+      profiles.put(activeProfile, currentSettings);
+
+      if (activeProfile == 1) {
+        activeProfile = 2;
+      } else if (activeProfile == 2) {
+        activeProfile = 1;
+      }
+      profiles.get(activeProfile).forEach((key, value) -> {
+
+        if (key.equals("fov")) {
+          Minecraft.getInstance().options.fov().set((Integer) value);
+        } else {
+          ((OptionInstance<Object>) options.get(key)).set(value);
+        }
+      });
+      player.displayClientMessage(
+          Component.translatable("key.customfov.profile.switch", activeProfile), true);
+    }
+
+    if (cooldown > 0) {
+      cooldown--;
+    }
+  }
+
+  public static void setupProfiles() {
+    File file = new File(Minecraft.getInstance().gameDirectory, "customfov.txt");
+    Map<String, OptionInstance<?>> options = getOptions();
+    options.put("fov", Minecraft.getInstance().options.fov());
+    int profile = 1;
+
+    if (!file.exists()) {
+      options.forEach((key, option) -> {
+        profiles.computeIfAbsent(1, (k) -> new LinkedHashMap<>()).put(key, option.get());
+
+        Object def = switch (key) {
+          case "fov" -> 70;
+          case "fovEffectsMode" -> FovEffectsMode.ALL;
+          default -> 1.0D;
+        };
+        profiles.computeIfAbsent(2, (k) -> new LinkedHashMap<>()).put(key, def);
+      });
+      return;
+    } else {
+      Map<Integer, Map<String, String>> read = new LinkedHashMap<>();
+
+      try (BufferedReader bufferedreader = Files.newReader(file, Charsets.UTF_8)) {
+        bufferedreader.lines().forEach((line) -> {
+          try {
+            String[] split = line.split(":");
+            read.computeIfAbsent(Integer.parseInt(split[0]), (k) -> new LinkedHashMap<>())
+                .put(split[1], split[2]);
+          } catch (Exception exception1) {
+            CustomFovConstants.LOG.warn("Skipping malformed profile: {}", line);
+          }
+        });
+      } catch (IOException e) {
+        CustomFovConstants.LOG.error("Could not read {}", file, e);
+      }
+      Map<String, String> profileMap = read.getOrDefault(0, new HashMap<>());
+
+      try {
+        profile = Integer.parseInt(profileMap.getOrDefault("profile", "1"));
+      } catch (NumberFormatException e) {
+        CustomFovConstants.LOG.error("{} is not a valid profile", profileMap.get("profile"));
+      }
+      read.forEach((prof, map) -> {
+        map.forEach((key, value) -> {
+          Map<String, Object> prof1 = profiles.computeIfAbsent(prof, (k) -> new LinkedHashMap<>());
+
+          try {
+            if (key.equals("fov")) {
+              prof1.put(key, Integer.parseInt(value));
+            } else if (key.equals("fovEffectsMode")) {
+              prof1.put(key, FovEffectsMode.valueOf(value));
+            } else {
+              prof1.put(key, Double.parseDouble(value));
+            }
+          } catch (Exception e) {
+            CustomFovConstants.LOG.warn("Skipping malformed value {} for {}", value, key);
+          }
+        });
+      });
+    }
+    activeProfile = profile;
+    profiles.get(activeProfile).forEach((key, value) -> {
+
+      if (key.equals("fov")) {
+        Minecraft.getInstance().options.fov().set((Integer) value);
+      } else {
+        ((OptionInstance<Object>) options.get(key)).set(value);
+      }
+    });
+  }
+
+  public static void saveProfiles() {
+    File file = new File(Minecraft.getInstance().gameDirectory, "customfov.txt");
+
+    try (final PrintWriter printwriter = new PrintWriter(
+        new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
+      printwriter.println("0:profile:" + activeProfile);
+      profiles.forEach((profile, map) -> {
+
+        if (profile == 0) {
+          return;
+        }
+        map.forEach((key, value) -> printwriter.println(profile + ":" + key + ":" + value));
+      });
+    } catch (Exception e) {
+      CustomFovConstants.LOG.error("Failed to save profiles", e);
+    }
+  }
+
   public static Map<String, OptionInstance<?>> getOptions() {
     Map<String, OptionInstance<?>> result = new LinkedHashMap<>();
     result.put("fovEffectsMode", FOV_EFFECTS_MODE);
@@ -99,7 +246,7 @@ public class CustomFovMod {
   }
 
   public static OptionInstance<?>[] getList() {
-    return getOptions().values().toArray(new OptionInstance[]{});
+    return getOptions().values().toArray(new OptionInstance[] {});
   }
 
   private static boolean isScoping() {

@@ -7,7 +7,7 @@
     ],
     "client": [
       "GameRendererMixin",
-      "OptionsMixin",
+      "QuiltOptionsMixin",
       "PostAbstractClientPlayerMixin",
       "PreAbstractClientPlayerMixin"
     ],

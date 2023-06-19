@@ -13,7 +13,11 @@
   "license": "${license}",
   "icon": "${mod_id}_icon.png",
   "environment": "*",
-  "entrypoints": {},
+  "entrypoints": {
+    "client": [
+      "com.illusivesoulworks.customfov.CustomFovFabricMod"
+    ]
+  },
   "mixins": [
     "customfov.mixins.json",
     "customfov.fabric.mixins.json"

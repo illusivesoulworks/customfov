@@ -17,6 +17,7 @@
 
 package com.illusivesoulworks.customfov;
 
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -31,12 +32,18 @@ public class CustomFovForgeMod {
   public CustomFovForgeMod() {
     IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
     eventBus.addListener(this::clientSetup);
+    eventBus.addListener(this::registerKeys);
     ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
         () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY,
             (a, b) -> true));
   }
 
+  private void registerKeys(final RegisterKeyMappingsEvent evt) {
+    evt.register(CustomFovMod.registerKeys());
+  }
+
   private void clientSetup(final FMLClientSetupEvent evt) {
     ClientEventsListener.setup();
+    CustomFovMod.setupProfiles();
   }
 }
