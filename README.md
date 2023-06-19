@@ -1,6 +1,6 @@
-# Custom FoV
+# Custom FOV
 
-Custom FoV is a mod that allows players to customize various field of view settings through the Video Settings and
+Custom FOV is a mod that allows players to customize various field of view settings through the Video Settings and
 Accessibility Settings in the Options menu. The current settings allow configuration for flying, aiming, underwater and
 speed-related field of view changes. The speed-related field of view changes can further be broken down into sprinting
 and potion effect-related changes.
@@ -12,11 +12,11 @@ This mod is **client-side only**.
 ![](https://i.ibb.co/GW78yt1/videosettings.png)
 ![](https://i.ibb.co/vmSyCw8/accessibilitysettings.png)
 
-### FoV Effect Mode
+### FOV Effect Mode
 
 Allows either all field of view changes, only vanilla field of view changes, only modded field of view changes, or no field of view changes at all.
 
-### FoV Effect Scaling
+### FOV Effect Scaling
 
 Allows scaling different field of view changes (speed, sprinting, aiming, flying, submerged) from 0% to 100%. These settings
 stack with the vanilla "FOV Effects" setting, which controls the scaling for all changes.
@@ -30,7 +30,7 @@ stack with the vanilla "FOV Effects" setting, which controls the scaling for all
 ## Support
 
 Please report all bugs, issues, and feature requests to the
-[issue tracker](https://github.com/TheIllusiveC4/CustomFoV/issues).
+[issue tracker](https://github.com/illusivesoulworks/customfov/issues).
 
 For non-technical support and questions, join the developer's [Discord](https://discord.gg/JWgrdwt).
 

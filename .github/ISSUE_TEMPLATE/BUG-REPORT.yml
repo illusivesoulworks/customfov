@@ -75,7 +75,7 @@ body:
     label: Mod Version
     description: What version of the mod are you using?
     placeholder: |
-      Example: Custom FoV 1.17.1-5.1.0.1
+      Example: Custom FOV 1.17.1-5.1.0.1
   validations:
     required: true
 - type: textarea

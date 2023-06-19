@@ -9,6 +9,7 @@ Prior to version 6.0.0, this project used MCVERSION-MAJORMOD.MAJORAPI.MINOR.PATC
 - Added `Switch FOV Profile` keybinding to switch between two different FOV settings [#11](https://github.com/illusivesoulworks/customfov/issues/11)
 ### Changed
 - Updated to Minecraft 1.20.1
+- Changed name from "Custom FoV" to "Custom FOV"
 
 ## [6.1.0+1.19.4] - 2023.05.31
 ### Added
