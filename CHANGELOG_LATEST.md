@@ -7,3 +7,4 @@ This is a copy of the changelog for the most recent version. For the full versio
 - Added `Switch FOV Profile` keybinding to switch between two different FOV settings [#11](https://github.com/illusivesoulworks/customfov/issues/11)
 ### Changed
 - Updated to Minecraft 1.20.1
+- Changed name from "Custom FoV" to "Custom FOV"
