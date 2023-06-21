@@ -39,11 +39,11 @@ public class CustomFovForgeMod {
   }
 
   private void registerKeys(final RegisterKeyMappingsEvent evt) {
-    evt.register(CustomFovMod.registerKeys());
+    evt.register(CustomFovProfiles.registerKeys());
   }
 
   private void clientSetup(final FMLClientSetupEvent evt) {
     ClientEventsListener.setup();
-    CustomFovMod.setupProfiles();
+    CustomFovProfiles.setupProfiles();
   }
 }

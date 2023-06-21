@@ -18,6 +18,12 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
     implementation project(":common")
+
+    modCompileOnly "curse.maven:balm-fabric-500525:4597439"
+    modCompileOnly "curse.maven:default-options-fabric-547694:4583016"
+
+    modLocalRuntime "curse.maven:balm-fabric-500525:4597439"
+    modLocalRuntime "curse.maven:default-options-fabric-547694:4583016"
 }
 
 loom {

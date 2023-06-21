@@ -9,8 +9,8 @@ public class CustomFovFabricMod implements ClientModInitializer {
 
   @Override
   public void onInitializeClient() {
-    KeyBindingHelper.registerKeyBinding(CustomFovMod.registerKeys());
-    ClientTickEvents.END_CLIENT_TICK.register(client -> CustomFovMod.tick());
-    ClientLifecycleEvents.CLIENT_STARTED.register(client -> CustomFovMod.setupProfiles());
+    KeyBindingHelper.registerKeyBinding(CustomFovProfiles.registerKeys());
+    ClientTickEvents.END_CLIENT_TICK.register(client -> CustomFovProfiles.tick());
+    ClientLifecycleEvents.CLIENT_STARTED.register(client -> CustomFovProfiles.setupProfiles());
   }
 }

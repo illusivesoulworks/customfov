@@ -35,7 +35,7 @@ public class ClientEventsListener {
   }
 
   private static void tick(final TickEvent.ClientTickEvent evt) {
-    CustomFovMod.tick();
+    CustomFovProfiles.tick();
   }
 
   private static void preComputeFov(final ComputeFovModifierEvent evt) {

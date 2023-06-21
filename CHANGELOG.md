@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 Prior to version 6.0.0, this project used MCVERSION-MAJORMOD.MAJORAPI.MINOR.PATCH.
 
+## [6.2.1+1.20.1] - 2023.06.21
+### Fixed
+- Fixed startup crash with Default Options [#15](https://github.com/illusivesoulworks/customfov/issues/15)
+- Fixed Custom FOV overriding FOV settings erroneously
+
 ## [6.2.0+1.20.1] - 2023.06.17
 ### Added
 - Added `Switch FOV Profile` keybinding to switch between two different FOV settings [#11](https://github.com/illusivesoulworks/customfov/issues/11)
