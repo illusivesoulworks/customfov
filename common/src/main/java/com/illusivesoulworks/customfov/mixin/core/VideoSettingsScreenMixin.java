@@ -32,7 +32,7 @@ public class VideoSettingsScreenMixin {
   @Shadow
   private OptionsList list;
 
-  @Inject(at = @At(value = "INVOKE", target = "net/minecraft/client/gui/screens/VideoSettingsScreen.addWidget(Lnet/minecraft/client/gui/components/events/GuiEventListener;)Lnet/minecraft/client/gui/components/events/GuiEventListener;"), method = "init")
+  @Inject(at = @At(value = "INVOKE", target = "net/minecraft/client/gui/screens/VideoSettingsScreen.addRenderableWidget(Lnet/minecraft/client/gui/components/events/GuiEventListener;)Lnet/minecraft/client/gui/components/events/GuiEventListener;"), method = "init")
   private void customfov$addVideoOptions(CallbackInfo ci) {
     ClientMixinHooks.addFovOptions(this.list);
   }
