@@ -18,21 +18,19 @@
 
 package com.illusivesoulworks.customfov;
 
-import net.minecraftforge.client.event.ComputeFovModifierEvent;
-import net.minecraftforge.client.event.ViewportEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
+import net.neoforged.neoforge.client.event.ViewportEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.TickEvent;
 
 public class ClientEventsListener {
 
   public static void setup() {
-    MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST,
-        ClientEventsListener::preComputeFov);
-    MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST,
-        ClientEventsListener::postComputeFov);
-    MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, ClientEventsListener::viewportFov);
-    MinecraftForge.EVENT_BUS.addListener(ClientEventsListener::tick);
+    NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, ClientEventsListener::preComputeFov);
+    NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, ClientEventsListener::postComputeFov);
+    NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, ClientEventsListener::viewportFov);
+    NeoForge.EVENT_BUS.addListener(ClientEventsListener::tick);
   }
 
   private static void tick(final TickEvent.ClientTickEvent evt) {

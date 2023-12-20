@@ -3,12 +3,13 @@
   "id": "${mod_id}",
   "version": "${version}",
   "name": "${mod_name}",
-  "description": "${mod_description}",
+  "description": "${description}",
   "authors": [
     "${mod_author}"
   ],
   "contact": {
-    "issues": "${issue_tracker}"
+    "sources": "${sources_url}",
+    "issues": "${issues_url}"
   },
   "license": "${license}",
   "icon": "${mod_id}_icon.png",
@@ -18,15 +19,16 @@
       "com.illusivesoulworks.customfov.CustomFovFabricMod"
     ]
   },
+  "accessWidener" : "${mod_id}.accesswidener",
   "mixins": [
-    "customfov.mixins.json",
-    "customfov.fabric.mixins.json"
+    "${mod_id}.mixins.json",
+    "${mod_id}.fabric.mixins.json"
   ],
-  "accessWidener" : "customfov.accesswidener",
   "depends": {
     "fabricloader": ">=0.14",
-    "fabric": "*",
-    "minecraft": "${fabric_mc_version_range}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version_range_alt}",
     "java": ">=17"
   }
 }
+  

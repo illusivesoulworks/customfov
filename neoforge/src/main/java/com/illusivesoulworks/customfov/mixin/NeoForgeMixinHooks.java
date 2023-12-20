@@ -16,20 +16,14 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.illusivesoulworks.customfov.mixin.core;
+package com.illusivesoulworks.customfov.mixin;
 
-import com.illusivesoulworks.customfov.mixin.ForgeMixinHooks;
+import com.illusivesoulworks.customfov.CustomFovMod;
 import net.minecraft.client.Options;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Options.class)
-public class ForgeOptionsMixin {
+public class NeoForgeMixinHooks {
 
-  @Inject(at = @At("HEAD"), method = "processOptions")
-  private void customfov$processOptions(Options.FieldAccess access, CallbackInfo ci) {
-    ForgeMixinHooks.processOptions(access);
+  public static void processOptions(Options.FieldAccess access) {
+    CustomFovMod.getOptions().forEach(access::process);
   }
 }

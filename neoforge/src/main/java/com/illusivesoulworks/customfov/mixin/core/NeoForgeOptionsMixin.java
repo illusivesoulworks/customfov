@@ -18,7 +18,7 @@
 
 package com.illusivesoulworks.customfov.mixin.core;
 
-import com.illusivesoulworks.customfov.mixin.ForgeMixinHooks;
+import com.illusivesoulworks.customfov.mixin.NeoForgeMixinHooks;
 import net.minecraft.client.Options;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,10 +26,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Options.class)
-public class ForgeOptionsMixin {
+public class NeoForgeOptionsMixin {
 
   @Inject(at = @At("HEAD"), method = "processOptions")
   private void customfov$processOptions(Options.FieldAccess access, CallbackInfo ci) {
-    ForgeMixinHooks.processOptions(access);
+    NeoForgeMixinHooks.processOptions(access);
   }
 }
