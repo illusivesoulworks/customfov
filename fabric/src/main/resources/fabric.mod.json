@@ -19,16 +19,16 @@
       "com.illusivesoulworks.customfov.CustomFovFabricMod"
     ]
   },
-  "accessWidener" : "${mod_id}.accesswidener",
+  "accessWidener": "${mod_id}.accesswidener",
   "mixins": [
     "${mod_id}.mixins.json",
     "${mod_id}.fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14",
+    "fabricloader": ">=0.15",
     "fabric-api": "*",
     "minecraft": "${minecraft_version_range_alt}",
-    "java": ">=17"
+    "java": ">=${java_version}"
   }
 }
   

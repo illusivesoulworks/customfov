@@ -167,7 +167,7 @@ public class CustomFovMod {
     float modifier = 1.0F;
 
     if (player.getAbilities().flying) {
-      modifier *= 1.0F + 0.1F * FLYING.get();
+      modifier *= (float) (1.0F + 0.1F * FLYING.get());
     }
     AttributeInstance attribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
 
@@ -181,7 +181,7 @@ public class CustomFovMod {
         if (player.isSprinting()) {
           float effects = (value / 1.30000001192092896F) - walkingSpeed;
           float sprint = 0.30000001192092896F;
-          effects *= speedModifier;
+          effects *= (float) speedModifier;
           sprint *= SPRINTING.get();
           double modified = (walkingSpeed + effects) * (1.0F + sprint);
           modifier = (float) ((double) modifier * (modified / walkingSpeed + 1.0F) / 2.0F);
@@ -211,7 +211,7 @@ public class CustomFovMod {
         } else {
           f1 = f1 * f1;
         }
-        modifier *= 1.0F - (f1 * 0.15F) * AIMING.get();
+        modifier *= (float) (1.0F - (f1 * 0.15F) * AIMING.get());
       } else if (isScoping()) {
         modifier *= 0.1F;
       }

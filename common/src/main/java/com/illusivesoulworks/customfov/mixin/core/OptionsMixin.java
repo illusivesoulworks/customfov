@@ -19,6 +19,7 @@
 package com.illusivesoulworks.customfov.mixin.core;
 
 import com.illusivesoulworks.customfov.CustomFovProfiles;
+import com.illusivesoulworks.customfov.mixin.ClientMixinHooks;
 import net.minecraft.client.Options;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,5 +32,10 @@ public abstract class OptionsMixin {
   @Inject(at = @At("TAIL"), method = "save")
   private void customfov$save(CallbackInfo ci) {
     CustomFovProfiles.saveProfiles();
+  }
+
+  @Inject(at = @At("HEAD"), method = "processOptions")
+  private void customfov$processOptions(Options.FieldAccess access, CallbackInfo ci) {
+    ClientMixinHooks.processOptions(access);
   }
 }

@@ -20,8 +20,8 @@ package com.illusivesoulworks.customfov.mixin;
 
 import com.illusivesoulworks.customfov.CustomFovMod;
 import net.minecraft.client.OptionInstance;
+import net.minecraft.client.Options;
 import net.minecraft.client.gui.components.OptionsList;
-import net.minecraft.client.gui.screens.VideoSettingsScreen;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class ClientMixinHooks {
@@ -32,5 +32,9 @@ public class ClientMixinHooks {
 
   public static OptionInstance<?>[] addFovOptions(OptionInstance<?>[] smallOptions) {
     return ArrayUtils.addAll(smallOptions, CustomFovMod.getList());
+  }
+
+  public static void processOptions(Options.FieldAccess access) {
+    CustomFovMod.getOptions().forEach(access::process);
   }
 }

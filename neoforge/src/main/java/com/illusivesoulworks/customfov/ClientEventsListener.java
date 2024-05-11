@@ -19,10 +19,10 @@
 package com.illusivesoulworks.customfov;
 
 import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.TickEvent;
 
 public class ClientEventsListener {
 
@@ -33,7 +33,7 @@ public class ClientEventsListener {
     NeoForge.EVENT_BUS.addListener(ClientEventsListener::tick);
   }
 
-  private static void tick(final TickEvent.ClientTickEvent evt) {
+  private static void tick(final ClientTickEvent.Post evt) {
     CustomFovProfiles.tick();
   }
 

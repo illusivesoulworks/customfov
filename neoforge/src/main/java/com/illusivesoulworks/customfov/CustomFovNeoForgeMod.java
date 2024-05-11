@@ -31,9 +31,6 @@ public class CustomFovNeoForgeMod {
   public CustomFovNeoForgeMod(IEventBus eventBus) {
     eventBus.addListener(this::clientSetup);
     eventBus.addListener(this::registerKeys);
-    ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
-        () -> new IExtensionPoint.DisplayTest(() -> IExtensionPoint.DisplayTest.IGNORESERVERONLY,
-            (a, b) -> true));
   }
 
   private void registerKeys(final RegisterKeyMappingsEvent evt) {
