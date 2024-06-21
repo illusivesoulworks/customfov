@@ -18,24 +18,30 @@
 
 package com.illusivesoulworks.customfov.mixin.core;
 
-import com.illusivesoulworks.customfov.CustomFovProfiles;
 import com.illusivesoulworks.customfov.mixin.ClientMixinHooks;
 import net.minecraft.client.Options;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.options.AccessibilityOptionsScreen;
+import net.minecraft.client.gui.screens.options.OptionsSubScreen;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Options.class)
-public abstract class OptionsMixin {
+@Mixin(AccessibilityOptionsScreen.class)
+public abstract class MixinAccessibilityOptionsScreen extends OptionsSubScreen {
 
-  @Inject(at = @At("TAIL"), method = "save")
-  private void customfov$save(CallbackInfo ci) {
-    CustomFovProfiles.saveProfiles();
+  public MixinAccessibilityOptionsScreen(Screen $$0, Options $$1, Component $$2) {
+    super($$0, $$1, $$2);
   }
 
-  @Inject(at = @At("HEAD"), method = "processOptions")
-  private void customfov$processOptions(Options.FieldAccess access, CallbackInfo ci) {
-    ClientMixinHooks.processOptions(access);
+  @SuppressWarnings("ConstantConditions")
+  @Inject(at = @At("TAIL"), method = "addOptions")
+  private void customfov$addOptions(CallbackInfo ci) {
+
+    if (this.list != null) {
+      ClientMixinHooks.addFovOptions(this.list);
+    }
   }
 }

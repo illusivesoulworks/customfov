@@ -6,9 +6,9 @@
   "mixins": [
   ],
   "client": [
-    "OptionsMixin",
-    "SimpleOptionsSubScreenMixin",
-    "VideoSettingsScreenMixin"
+    "MixinOptions",
+    "MixinAccessibilityOptionsScreen",
+    "MixinVideoSettingsScreen"
   ],
   "injectors": {
     "defaultRequire": 1

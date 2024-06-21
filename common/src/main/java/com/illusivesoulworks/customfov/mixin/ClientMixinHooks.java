@@ -19,19 +19,13 @@
 package com.illusivesoulworks.customfov.mixin;
 
 import com.illusivesoulworks.customfov.CustomFovMod;
-import net.minecraft.client.OptionInstance;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.components.OptionsList;
-import org.apache.commons.lang3.ArrayUtils;
 
 public class ClientMixinHooks {
 
   public static void addFovOptions(OptionsList list) {
     list.addSmall(CustomFovMod.getList());
-  }
-
-  public static OptionInstance<?>[] addFovOptions(OptionInstance<?>[] smallOptions) {
-    return ArrayUtils.addAll(smallOptions, CustomFovMod.getList());
   }
 
   public static void processOptions(Options.FieldAccess access) {
