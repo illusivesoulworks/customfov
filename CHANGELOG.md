@@ -6,7 +6,7 @@ Prior to version 6.0.0, this project used MCVERSION-MAJORMOD.MAJORAPI.MINOR.PATC
 
 ## [9.0.0+1.21] - 2024.06.20
 ### Changed
-- Updated to Minecraft 1.20.6
+- Updated to Minecraft 1.21
 
 ## [8.0.0+1.20.6] - 2024.05.11
 ### Changed

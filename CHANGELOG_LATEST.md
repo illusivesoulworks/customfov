@@ -4,4 +4,4 @@ This is a copy of the changelog for the most recent version. For the full versio
 
 ## [9.0.0+1.21] - 2024.06.20
 ### Changed
-- Updated to Minecraft 1.20.6
+- Updated to Minecraft 1.21
