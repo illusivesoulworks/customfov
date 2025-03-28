@@ -31,7 +31,7 @@ public class GameRendererMixin {
 
   @Inject(at = @At("TAIL"), method = "getFov", cancellable = true)
   private void customfov$getFov(Camera camera, float partialTicks, boolean useFovSetting,
-                                CallbackInfoReturnable<Double> cb) {
+                                CallbackInfoReturnable<Float> cb) {
     CustomFovMod.computeFov(camera, cb.getReturnValue()).ifPresent(cb::setReturnValue);
   }
 }

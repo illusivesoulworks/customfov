@@ -72,20 +72,24 @@ public class CustomFovMod {
           case ALL -> tooltip4;
         };
       }, OptionInstance.forOptionEnum(),
-          new OptionInstance.Enum<>(Arrays.asList(FovEffectsMode.values()),
-              Codec.INT.xmap(FovEffectsMode::byId, FovEffectsMode::getId)),
-          FovEffectsMode.ALL, (val) -> {
+                           new OptionInstance.Enum<>(Arrays.asList(FovEffectsMode.values()),
+                                                     Codec.INT.xmap(FovEffectsMode::byId,
+                                                                    FovEffectsMode::getId)),
+                           FovEffectsMode.ALL, (val) -> {
       });
 
   private static OptionInstance<Double> createFovOption(String keyIn) {
     String key = "customfov.options." + keyIn;
     return new OptionInstance<>(key,
-        OptionInstance.cachedConstantTooltip(Component.translatable(key + ".tooltip")),
-        (component, val) -> val == 0.0D ? Component.translatable("options.generic_value", component,
-            CommonComponents.OPTION_OFF) :
-            Component.translatable("options.percent_value", component, (int) (val * 100.0D)),
-        OptionInstance.UnitDouble.INSTANCE.xmap(Mth::square, Math::sqrt),
-        Codec.doubleRange(0.0D, 1.0D), 1.0D, (val) -> {
+                                OptionInstance.cachedConstantTooltip(
+                                    Component.translatable(key + ".tooltip")),
+                                (component, val) -> val == 0.0D ?
+                                    Component.translatable("options.generic_value", component,
+                                                           CommonComponents.OPTION_OFF) :
+                                    Component.translatable("options.percent_value", component,
+                                                           (int) (val * 100.0D)),
+                                OptionInstance.UnitDouble.INSTANCE.xmap(Mth::square, Math::sqrt),
+                                Codec.doubleRange(0.0D, 1.0D), 1.0D, (val) -> {
     });
   }
 
@@ -121,7 +125,7 @@ public class CustomFovMod {
 
       if (scale) {
         fovModifier = (float) Mth.lerp(Minecraft.getInstance().options.fovEffectScale().get(), 1.0F,
-            fovModifier);
+                                       fovModifier);
       }
       result = fovModifier;
     }
@@ -139,7 +143,7 @@ public class CustomFovMod {
     return result;
   }
 
-  public static Optional<Double> computeFov(Camera camera, double currentFov) {
+  public static Optional<Float> computeFov(Camera camera, float currentFov) {
     FogType fogType = camera.getFluidInCamera();
 
     if (fogType != FogType.LAVA && fogType != FogType.WATER) {
@@ -148,14 +152,14 @@ public class CustomFovMod {
     FovEffectsMode mode = FOV_EFFECTS_MODE.get();
     float originalModifier =
         (float) Mth.lerp(Minecraft.getInstance().options.fovEffectScale().get(), 1.0D,
-            0.85714287F);
-    double originalFOV = currentFov / originalModifier;
+                         0.85714287F);
+    float originalFOV = currentFov / originalModifier;
 
     if (mode == FovEffectsMode.NONE || mode == FovEffectsMode.MODDED_ONLY) {
       return Optional.of(originalFOV);
     }
     return Optional.of(
-        originalFOV * (1.0F - (1.0F - originalModifier) * SUBMERGED.get()));
+        originalFOV * (1.0F - (1.0F - originalModifier) * SUBMERGED.get().floatValue()));
   }
 
   public static float getCustomFovModifier(float currentFovModifier) {

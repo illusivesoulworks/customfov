@@ -22,20 +22,21 @@ import com.illusivesoulworks.customfov.CustomFovMod;
 import net.minecraft.client.player.AbstractClientPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(value = AbstractClientPlayer.class, priority = 100)
 public class PreAbstractClientPlayerMixin {
 
-  @ModifyVariable(
+  @ModifyArg(
       at = @At(
           value = "INVOKE",
-          target = "net/minecraft/client/Options.fovEffectScale()Lnet/minecraft/client/OptionInstance;"
+          target = "net/minecraft/util/Mth.lerp(FFF)F"
       ),
       method = "getFieldOfViewModifier",
-      ordinal = 0
+      index = 2
   )
-  private float customfov$getFieldOfViewModifier(float fovModifier) {
+  private float customfov$getFieldOfViewModifier(float fovEffectScale, float start, float fovModifier) {
     return CustomFovMod.preComputeFovModifier(fovModifier, false);
   }
 }
