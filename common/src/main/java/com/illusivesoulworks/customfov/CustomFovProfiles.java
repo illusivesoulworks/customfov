@@ -35,19 +35,23 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+
+import static com.illusivesoulworks.customfov.CustomFovConstants.MOD_ID;
 
 public class CustomFovProfiles {
 
   private static final Map<Integer, Map<String, Object>> PROFILES = new HashMap<>();
   private static int activeProfile = 1;
   private static KeyMapping toggleKey;
+  private static KeyMapping.Category category;
   private static int cooldown = 0;
   private static boolean passedInitialRead = false;
 
   public static KeyMapping registerKeys() {
-    toggleKey = new KeyMapping("key.customfov.profile.desc", InputConstants.UNKNOWN.getValue(),
-        "key.customfov.category");
+    category = KeyMapping.Category.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "category"));
+    toggleKey = new KeyMapping("key.customfov.profile.desc", InputConstants.UNKNOWN.getValue(), category);
     return toggleKey;
   }
 
