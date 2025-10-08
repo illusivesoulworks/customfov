@@ -20,34 +20,28 @@ package com.illusivesoulworks.customfov;
 
 import net.minecraftforge.client.event.ComputeFovModifierEvent;
 import net.minecraftforge.client.event.ViewportEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.listener.Priority;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 
 public class ClientEventsListener {
-
-  public static void setup() {
-    MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST,
-        ClientEventsListener::preComputeFov);
-    MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST,
-        ClientEventsListener::postComputeFov);
-    MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, ClientEventsListener::viewportFov);
-    MinecraftForge.EVENT_BUS.addListener(ClientEventsListener::tick);
-  }
-
-  private static void tick(final TickEvent.ClientTickEvent evt) {
+  @SubscribeEvent
+  public static void tick(final TickEvent.ClientTickEvent.Pre evt) {
     CustomFovProfiles.tick();
   }
 
-  private static void preComputeFov(final ComputeFovModifierEvent evt) {
+  @SubscribeEvent(priority = Priority.HIGHEST)
+  public static void preComputeFov(final ComputeFovModifierEvent evt) {
     evt.setNewFovModifier(CustomFovMod.preComputeFovModifier(evt.getFovModifier(), true));
   }
 
-  private static void postComputeFov(final ComputeFovModifierEvent evt) {
+  @SubscribeEvent(priority = Priority.LOWEST)
+  public static void postComputeFov(final ComputeFovModifierEvent evt) {
     evt.setNewFovModifier(CustomFovMod.postComputeFovModifier(evt.getNewFovModifier(), false));
   }
 
-  private static void viewportFov(final ViewportEvent.ComputeFov evt) {
+  @SubscribeEvent(priority = Priority.HIGHEST)
+  public static void viewportFov(final ViewportEvent.ComputeFov evt) {
     CustomFovMod.computeFov(evt.getCamera(), evt.getFOV()).ifPresent(evt::setFOV);
   }
 }
