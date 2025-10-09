@@ -19,9 +19,8 @@
 package com.illusivesoulworks.customfov;
 
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.IExtensionPoint;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -29,11 +28,10 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(CustomFovConstants.MOD_ID)
 public class CustomFovForgeMod {
 
-  public CustomFovForgeMod() {
-    IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-    eventBus.addListener(this::clientSetup);
-    eventBus.addListener(this::registerKeys);
-    ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
+  public CustomFovForgeMod(FMLJavaModLoadingContext context) {
+    FMLClientSetupEvent.getBus(context.getModBusGroup()).addListener(this::clientSetup);
+    RegisterKeyMappingsEvent.BUS.addListener(this::registerKeys);
+    context.registerExtensionPoint(IExtensionPoint.DisplayTest.class,
         () -> new IExtensionPoint.DisplayTest(() -> IExtensionPoint.DisplayTest.IGNORESERVERONLY,
             (a, b) -> true));
   }
@@ -43,7 +41,7 @@ public class CustomFovForgeMod {
   }
 
   private void clientSetup(final FMLClientSetupEvent evt) {
-    ClientEventsListener.setup();
+    MinecraftForge.EVENT_BUS.register(ClientEventsListener.class);
     CustomFovProfiles.setupProfiles();
   }
 }
