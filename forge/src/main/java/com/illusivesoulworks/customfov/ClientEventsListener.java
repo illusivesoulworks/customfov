@@ -25,6 +25,7 @@ import net.minecraftforge.eventbus.api.listener.Priority;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 
 public class ClientEventsListener {
+
   @SubscribeEvent
   public static void tick(final TickEvent.ClientTickEvent.Pre evt) {
     CustomFovProfiles.tick();

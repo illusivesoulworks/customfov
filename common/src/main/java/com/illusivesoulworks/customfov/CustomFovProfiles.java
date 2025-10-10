@@ -50,7 +50,7 @@ public class CustomFovProfiles {
   private static boolean passedInitialRead = false;
 
   public static KeyMapping registerKeys() {
-    category = KeyMapping.Category.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "category"));
+    category = KeyMapping.Category.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "general"));
     toggleKey = new KeyMapping("key.customfov.profile.desc", InputConstants.UNKNOWN.getValue(), category);
     return toggleKey;
   }
