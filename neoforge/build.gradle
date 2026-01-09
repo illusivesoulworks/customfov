@@ -2,7 +2,7 @@ import net.darkhax.curseforgegradle.TaskPublishCurseForge
 
 plugins {
     id 'multiloader-loader'
-    id 'net.neoforged.moddev' version '2.0.113'
+    id 'net.neoforged.moddev' version '2.0.123'
     id 'com.modrinth.minotaur' version '2.+'
     id 'net.darkhax.curseforgegradle' version '1.+'
 }
@@ -57,11 +57,6 @@ configurations {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-dependencies {
-    implementation "net.neoforged:neoforge:${neoforge_version}"
-}
-
-
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
     apiToken = "${System.getenv('CURSEFORGE_KEY')}"
     //debugMode = true
@@ -73,8 +68,8 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     "${release_versions}".split(',').each {
         mainFile.addGameVersion("${it}")
     }
-    mainFile.withAdditionalFile(sourcesJar)
     mainFile.addModLoader("NeoForge")
+    mainFile.withAdditionalFile(sourcesJar)
 
     doLast {
 

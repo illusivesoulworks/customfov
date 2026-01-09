@@ -8,34 +8,31 @@ plugins {
 
 def publishDiscord() {
     try {
-        def cfLinks = new StringJoiner('\\n')
+        def links = ['curse_link', 'modrinth_link']
+        def foundLinks = ['cf': new StringJoiner('\\n'), 'modrinth': new StringJoiner('\\n')]
+        def modLoaders = []
+        modLoaders.add(['neoforge', "NeoForge"])
+        modLoaders.add(['fabric', "Fabric"])
+        modLoaders.add(['forge', "Forge"])
 
-        if (project(':fabric').hasProperty('curse_link')) {
-            cfLinks.add("[Fabric](${project(':fabric').findProperty('curse_link')})")
-        }
+        for (int i = 0; i < links.size() - 1; i++) {
+            def link = links[i]
+            def currentLinks = foundLinks[i]
 
-        if (project(':forge').hasProperty('curse_link')) {
-            cfLinks.add("[Forge](${project(':forge').findProperty('curse_link')})")
-        }
+            for (int j = 0; j < modLoaders.size() - 1; j++) {
+                def modLoader = modLoaders[j]
+                def id = modLoader[0]
+                def name = modLoader[1]
+                def foundLink = project(":${id}").findProperty("${link}")
 
-        if (project(':neoforge').hasProperty('curse_link')) {
-            cfLinks.add("[NeoForge](${project(':neoforge').findProperty('curse_link')})")
+                if (foundLink) {
+                    currentLinks.add("[${name}](${foundLink})")
+                }
+            }
         }
-        def modrinthLinks = new StringJoiner('\\n')
-
-        if (project(':fabric').hasProperty('modrinth_link')) {
-            modrinthLinks.add("[Fabric](${project(':fabric').findProperty('modrinth_link')})")
+        foundLinks.each {
+            print(it)
         }
-
-        if (project(':forge').hasProperty('modrinth_link')) {
-            modrinthLinks.add("[Forge](${project(':forge').findProperty('modrinth_link')})")
-        }
-
-        if (project(':neoforge').hasProperty('curse_link')) {
-            modrinthLinks.add("[NeoForge](${project(':neoforge').findProperty('modrinth_link')})")
-        }
-        println(cfLinks)
-        println(modrinthLinks)
         def changelog = file("CHANGELOG_LATEST.md").getText()
         changelog = changelog.substring(changelog.indexOf("##"))
         changelog = changelog.replaceAll("\n", "\\\\n")
@@ -65,12 +62,12 @@ def publishDiscord() {
                     },
                     {
                       "name": "CurseForge",
-                      "value": "${cfLinks}",
+                      "value": "${foundLinks['cf']}",
                       "inline": true
                     },
                     {
                       "name": "Modrinth",
-                      "value": "${modrinthLinks}",
+                      "value": "${foundLinks['modrinth']}",
                       "inline": true
                     },
                     {
@@ -86,7 +83,7 @@ def publishDiscord() {
             }
             """
         println(message)
-        final URL url = URI.create("${providers.environmentVariable('DISCORD_WEBHOOK')}").toURL()
+        final URL url = URI.create("${System.getenv('DISCORD_WEBHOOK')}").toURL()
         final HttpsURLConnection connection = (HttpsURLConnection) url.openConnection()
         connection.addRequestProperty("Content-Type", "application/json; charset=UTF-8")
         connection.addRequestProperty("User-Agent", "${mod_name} Gradle Upload")
