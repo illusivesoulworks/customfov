@@ -15,11 +15,11 @@ def publishDiscord() {
         modLoaders.add(['fabric', "Fabric"])
         modLoaders.add(['forge', "Forge"])
 
-        for (int i = 0; i < links.size() - 1; i++) {
+        for (int i = 0; i < links.size(); i++) {
             def link = links[i]
             def currentLinks = foundLinks[i]
 
-            for (int j = 0; j < modLoaders.size() - 1; j++) {
+            for (int j = 0; j < modLoaders.size(); j++) {
                 def modLoader = modLoaders[j]
                 def id = modLoader[0]
                 def name = modLoader[1]
@@ -31,7 +31,7 @@ def publishDiscord() {
             }
         }
         foundLinks.each {
-            print(it)
+            print("${it.getKey()}: ${it.getValue().toString()}")
         }
         def changelog = file("CHANGELOG_LATEST.md").getText()
         changelog = changelog.substring(changelog.indexOf("##"))
@@ -101,7 +101,7 @@ def publishDiscord() {
     }
 }
 
-def ordered(String... dependencyPaths) {
+def ordered(List<String> dependencyPaths) {
     def dependencies = dependencyPaths.collect { tasks.getByPath(it) }
     for (int i = 0; i < dependencies.size() - 1; i++) {
         dependencies[i + 1].mustRunAfter(dependencies[i])
@@ -109,56 +109,14 @@ def ordered(String... dependencyPaths) {
     return dependencies
 }
 
-tasks.register('publishFabric') {
-    dependsOn ordered(':fabric:modrinth', ':fabric:publishCurseForge')
-
-    doLast {
-        publishDiscord()
+tasks.register('publishMod') {
+    def loaders = ['forge', 'fabric', 'neoforge']
+    List<String> publishTasks = []
+    loaders.each {
+        publishTasks.add(":${it}:modrinth")
+        publishTasks.add(":${it}:publishCurseForge")
     }
-}
-
-tasks.register('publishForge') {
-    dependsOn ordered(':forge:modrinth', ':forge:publishCurseForge')
-
-    doLast {
-        publishDiscord()
-    }
-}
-
-tasks.register('publishNeoForge') {
-    dependsOn ordered(':neoforge:modrinth', ':neoforge:publishCurseForge')
-
-    doLast {
-        publishDiscord()
-    }
-}
-
-tasks.register('publishFabricForge') {
-    dependsOn ordered(':forge:modrinth', 'forge:publishCurseForge', ':fabric:modrinth', ':fabric:publishCurseForge')
-
-    doLast {
-        publishDiscord()
-    }
-}
-
-tasks.register('publishFabricNeoForge') {
-    dependsOn ordered(':fabric:modrinth', ':fabric:publishCurseForge', ':neoforge:modrinth', ':neoforge:publishCurseForge')
-
-    doLast {
-        publishDiscord()
-    }
-}
-
-tasks.register('publishForgeNeoForge') {
-    dependsOn ordered(':forge:modrinth', ':forge:publishCurseForge', ':neoforge:modrinth', ':neoforge:publishCurseForge')
-
-    doLast {
-        publishDiscord()
-    }
-}
-
-tasks.register('publishFabricForgeNeoForge') {
-    dependsOn ordered(':forge:modrinth', ':forge:publishCurseForge', ':fabric:modrinth', ':fabric:publishCurseForge', ':neoforge:modrinth', ':neoforge:publishCurseForge')
+    dependsOn ordered(publishTasks)
 
     doLast {
         publishDiscord()
