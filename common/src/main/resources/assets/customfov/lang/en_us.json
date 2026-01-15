@@ -3,6 +3,7 @@
   "key.customfov.profile.desc": "Switch FOV Profile",
   "key.customfov.profile.switch": "Switched to FOV Profile %d",
   "options.fovEffectScale.tooltip": "Controls how much the field of view can change in general.",
+  "customfov.options.header": "Field of View Effects",
   "customfov.options.submergedFovEffectScale": "Submerged FOV Effects",
   "customfov.options.submergedFovEffectScale.tooltip": "Controls how much the field of view can change when underwater.",
   "customfov.options.flyingFovEffectScale": "Flying FOV Effects",

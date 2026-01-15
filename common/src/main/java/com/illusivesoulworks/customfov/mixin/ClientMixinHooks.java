@@ -21,10 +21,12 @@ package com.illusivesoulworks.customfov.mixin;
 import com.illusivesoulworks.customfov.CustomFovMod;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.components.OptionsList;
+import net.minecraft.network.chat.Component;
 
 public class ClientMixinHooks {
 
   public static void addFovOptions(OptionsList list) {
+    list.addHeader(Component.translatable("customfov.options.header"));
     list.addSmall(CustomFovMod.getList());
   }
 
