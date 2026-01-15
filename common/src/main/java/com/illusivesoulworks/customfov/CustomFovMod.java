@@ -20,11 +20,9 @@ package com.illusivesoulworks.customfov;
 
 import com.mojang.serialization.Codec;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
-import javax.annotation.Nonnull;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
@@ -33,13 +31,14 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.minecraft.util.OptionEnum;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.FogType;
+import org.jetbrains.annotations.NotNull;
 
 public class CustomFovMod {
 
@@ -71,10 +70,9 @@ public class CustomFovMod {
           case MODDED_ONLY -> tooltip3;
           case ALL -> tooltip4;
         };
-      }, OptionInstance.forOptionEnum(),
+      }, (component, fovEffectsMode) -> fovEffectsMode.caption(),
                            new OptionInstance.Enum<>(Arrays.asList(FovEffectsMode.values()),
-                                                     Codec.INT.xmap(FovEffectsMode::byId,
-                                                                    FovEffectsMode::getId)),
+                                                     FovEffectsMode.CODEC),
                            FovEffectsMode.ALL, (val) -> {
       });
 
@@ -84,10 +82,13 @@ public class CustomFovMod {
                                 OptionInstance.cachedConstantTooltip(
                                     Component.translatable(key + ".tooltip")),
                                 (component, val) -> val == 0.0D ?
-                                    Component.translatable("options.generic_value", component,
-                                                           CommonComponents.OPTION_OFF) :
-                                    Component.translatable("options.percent_value", component,
-                                                           (int) (val * 100.0D)),
+                                                    Component.translatable("options.generic_value",
+                                                                           component,
+                                                                           CommonComponents.OPTION_OFF)
+                                                                :
+                                                    Component.translatable("options.percent_value",
+                                                                           component,
+                                                                           (int) (val * 100.0D)),
                                 OptionInstance.UnitDouble.INSTANCE.xmap(Mth::square, Math::sqrt),
                                 Codec.doubleRange(0.0D, 1.0D), 1.0D, (val) -> {
     });
@@ -223,34 +224,30 @@ public class CustomFovMod {
     return modifier;
   }
 
-  public enum FovEffectsMode implements OptionEnum {
-    NONE(0, "customfov.options.fovEffectsMode.none"),
-    VANILLA_ONLY(1, "customfov.options.fovEffectsMode.vanillaOnly"),
-    MODDED_ONLY(2, "customfov.options.fovEffectsMode.moddedOnly"),
-    ALL(3, "customfov.options.fovEffectsMode.all");
+  public enum FovEffectsMode implements StringRepresentable {
+    NONE("none", "customfov.options.fovEffectsMode.none"),
+    VANILLA_ONLY("vanillaOnly", "customfov.options.fovEffectsMode.vanillaOnly"),
+    MODDED_ONLY("moddedOnly", "customfov.options.fovEffectsMode.moddedOnly"),
+    ALL("all", "customfov.options.fovEffectsMode.all");
 
-    private static final FovEffectsMode[] BY_ID =
-        Arrays.stream(values()).sorted(Comparator.comparingInt(FovEffectsMode::getId))
-            .toArray(FovEffectsMode[]::new);
-    private final int id;
-    private final String key;
+    public static final Codec<FovEffectsMode> CODEC =
+        StringRepresentable.fromEnum(FovEffectsMode::values);
+    private final String serializedName;
+    private final Component caption;
 
-    FovEffectsMode(int id, String key) {
-      this.id = id;
-      this.key = key;
+    FovEffectsMode(String serializedName, String key) {
+      this.serializedName = serializedName;
+      this.caption = Component.translatable(key);
     }
 
-    public int getId() {
-      return this.id;
+    @NotNull
+    @Override
+    public String getSerializedName() {
+      return this.serializedName;
     }
 
-    @Nonnull
-    public String getKey() {
-      return this.key;
-    }
-
-    public static FovEffectsMode byId(int id) {
-      return BY_ID[Mth.positiveModulo(id, BY_ID.length)];
+    public Component caption() {
+      return this.caption;
     }
   }
 }

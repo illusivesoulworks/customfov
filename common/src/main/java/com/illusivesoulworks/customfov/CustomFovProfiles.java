@@ -35,7 +35,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import static com.illusivesoulworks.customfov.CustomFovConstants.MOD_ID;
@@ -50,7 +50,7 @@ public class CustomFovProfiles {
   private static boolean passedInitialRead = false;
 
   public static KeyMapping registerKeys() {
-    category = KeyMapping.Category.register(ResourceLocation.fromNamespaceAndPath(MOD_ID, "general"));
+    category = KeyMapping.Category.register(Identifier.fromNamespaceAndPath(MOD_ID, "general"));
     toggleKey = new KeyMapping("key.customfov.profile.desc", InputConstants.UNKNOWN.getValue(), category);
     return toggleKey;
   }
