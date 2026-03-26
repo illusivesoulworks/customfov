@@ -15,10 +15,10 @@ body:
       label: Minecraft Version
       description: What version of Minecraft are you running? (Unlisted versions are unsupported)
       options:
-        - 1.21.11
-        - 1.21.10
-        - 1.21.1
-        - 1.20.1
+        - "26.1"
+        - "1.21.11"
+        - "1.21.1"
+        - "1.20.1"
     validations:
       required: true
   - type: textarea
@@ -33,12 +33,11 @@ body:
     id: loader
     attributes:
       label: Loader
-      description: Are you using Fabric, Forge, NeoForge, or Quilt?
+      description: Are you using NeoForge, Fabric, or Forge?
       options:
+        - NeoForge
         - Fabric
         - Forge
-        - NeoForge
-        - Quilt
     validations:
       required: true
   - type: textarea
