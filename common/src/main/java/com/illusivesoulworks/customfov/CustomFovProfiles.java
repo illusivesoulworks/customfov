@@ -18,6 +18,8 @@
 
 package com.illusivesoulworks.customfov;
 
+import static com.illusivesoulworks.customfov.CustomFovConstants.MOD_ID;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -38,8 +40,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
-import static com.illusivesoulworks.customfov.CustomFovConstants.MOD_ID;
-
 public class CustomFovProfiles {
 
   private static final Map<Integer, Map<String, Object>> PROFILES = new HashMap<>();
@@ -51,7 +51,8 @@ public class CustomFovProfiles {
 
   public static KeyMapping registerKeys() {
     category = KeyMapping.Category.register(Identifier.fromNamespaceAndPath(MOD_ID, "general"));
-    toggleKey = new KeyMapping("key.customfov.profile.desc", InputConstants.UNKNOWN.getValue(), category);
+    toggleKey =
+        new KeyMapping("key.customfov.profile.desc", InputConstants.UNKNOWN.getValue(), category);
     return toggleKey;
   }
 
@@ -83,8 +84,8 @@ public class CustomFovProfiles {
             ((OptionInstance<Object>) options.get(key)).set(value);
           }
         });
-        player.displayClientMessage(
-            Component.translatable("key.customfov.profile.switch", activeProfile), true);
+        player.sendOverlayMessage(
+            Component.translatable("key.customfov.profile.switch", activeProfile));
       } else {
         CustomFovConstants.LOG.error("Attempted to switch to missing profile {}", activeProfile);
       }

@@ -9,7 +9,7 @@ plugins {
 def publishDiscord() {
     try {
         def links = ['curse_link', 'modrinth_link']
-        def foundLinks = ['cf': new StringJoiner('\\n'), 'modrinth': new StringJoiner('\\n')]
+        def foundLinks = ['curse_link': new StringJoiner('\\n'), 'modrinth_link': new StringJoiner('\\n')]
         def modLoaders = []
         modLoaders.add(['neoforge', "NeoForge"])
         modLoaders.add(['fabric', "Fabric"])
@@ -17,7 +17,7 @@ def publishDiscord() {
 
         for (int i = 0; i < links.size(); i++) {
             def link = links[i]
-            def currentLinks = foundLinks[i]
+            def currentLinks = foundLinks[link]
 
             for (int j = 0; j < modLoaders.size(); j++) {
                 def modLoader = modLoaders[j]
@@ -25,7 +25,7 @@ def publishDiscord() {
                 def name = modLoader[1]
                 def foundLink = project(":${id}").findProperty("${link}")
 
-                if (foundLink) {
+                if (foundLink && currentLinks) {
                     currentLinks.add("[${name}](${foundLink})")
                 }
             }

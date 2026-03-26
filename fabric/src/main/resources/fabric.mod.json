@@ -19,7 +19,7 @@
       "com.illusivesoulworks.customfov.CustomFovFabricMod"
     ]
   },
-  "accessWidener": "${mod_id}.accesswidener",
+  "accessWidener": "${mod_id}.classtweaker",
   "mixins": [
     "${mod_id}.mixins.json",
     "${mod_id}.fabric.mixins.json"

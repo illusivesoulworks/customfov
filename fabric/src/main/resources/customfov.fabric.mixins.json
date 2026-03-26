@@ -6,7 +6,7 @@
     "mixins": [
     ],
     "client": [
-      "GameRendererMixin",
+      "CameraMixin",
       "PostAbstractClientPlayerMixin",
       "PreAbstractClientPlayerMixin"
     ],

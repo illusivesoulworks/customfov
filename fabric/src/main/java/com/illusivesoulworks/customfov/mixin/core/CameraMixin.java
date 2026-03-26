@@ -20,18 +20,18 @@ package com.illusivesoulworks.customfov.mixin.core;
 
 import com.illusivesoulworks.customfov.CustomFovMod;
 import net.minecraft.client.Camera;
-import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = GameRenderer.class, priority = 1500)
-public class GameRendererMixin {
+@Mixin(value = Camera.class, priority = 1500)
+public class CameraMixin {
 
-  @Inject(at = @At("TAIL"), method = "getFov", cancellable = true)
-  private void customfov$getFov(Camera camera, float partialTicks, boolean useFovSetting,
+  @Inject(at = @At("TAIL"), method = "modifyFovBasedOnDeathOrFluid", cancellable = true)
+  private void customfov$getFov(float partialTicks, float originalFov,
                                 CallbackInfoReturnable<Float> cb) {
-    CustomFovMod.computeFov(camera, cb.getReturnValue()).ifPresent(cb::setReturnValue);
+    CustomFovMod.computeFov((Camera) (Object) this, cb.getReturnValue())
+        .ifPresent(cb::setReturnValue);
   }
 }
