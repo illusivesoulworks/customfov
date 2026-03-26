@@ -62,12 +62,12 @@ def publishDiscord() {
                     },
                     {
                       "name": "CurseForge",
-                      "value": "${foundLinks['cf']}",
+                      "value": "${foundLinks['curse_link'].toString()}",
                       "inline": true
                     },
                     {
                       "name": "Modrinth",
-                      "value": "${foundLinks['modrinth']}",
+                      "value": "${foundLinks['modrinth_link'].toString()}",
                       "inline": true
                     },
                     {
