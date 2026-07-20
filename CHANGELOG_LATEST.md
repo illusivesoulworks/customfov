@@ -2,6 +2,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 This is a copy of the changelog for the most recent version. For the full version history, go [here](https://github.com/illusivesoulworks/customfov/blob/26.x/CHANGELOG.md).
 
-## [13.0.0+26.1] - 2026.03.25
+## [14.0.0+26.2] - 2026.07.20
 ### Changed
-- Updated to Minecraft 26.1
+- Updated to Minecraft 26.2

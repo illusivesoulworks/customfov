@@ -54,11 +54,13 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     mainFile.changelogType = 'markdown'
     mainFile.changelog = file('../CHANGELOG_LATEST.md')
     mainFile.releaseType = "${release_type}"
+    def sourceFile = mainFile.withAdditionalFile(sourcesJar)
     "${release_versions}".split(',').each {
         mainFile.addGameVersion("${it}")
+        sourceFile.gameVersions.add("")
     }
+    mainFile.addEnvironment("Client")
     mainFile.addModLoader("NeoForge")
-    mainFile.withAdditionalFile(sourcesJar)
 
     doLast {
 
